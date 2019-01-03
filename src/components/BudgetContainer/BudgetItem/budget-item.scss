@@ -1,0 +1,10 @@
+#budget-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid;
+  padding: 10px;
+}
+#budget-item:last-child {
+  border-bottom: 1px solid;
+}

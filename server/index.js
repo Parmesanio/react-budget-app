@@ -2,6 +2,7 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   massive = require("massive"),
   session = require("express-session"),
+  budget = require("./controllers/budget_controller"),
   app = express();
 require("dotenv").config();
 
@@ -24,6 +25,8 @@ massive(process.env.CONNECTION_STRING)
     console.log("DB Set");
   })
   .catch(err => console.log("Err in Massive"));
+//   --------------- ENDPOINTS
+app.get("/api/budget-items/:id", budget.get);
 const path = require("path");
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
