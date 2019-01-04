@@ -29,7 +29,7 @@ massive(process.env.CONNECTION_STRING)
 //   --------------- ENDPOINTS
 // Budget Endpoints
 app.get("/api/budget-items/:id", budget.get);
-
+app.post("/api/budget-items", budget.post);
 // User Endpoints
 app.get("/auth/callback", auth.auth0);
 // Session Endpoints

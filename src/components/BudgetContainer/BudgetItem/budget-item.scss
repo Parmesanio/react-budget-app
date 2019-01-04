@@ -10,8 +10,10 @@
 }
 .options {
   display: flex;
-
+  flex-wrap: wrap;
+  align-items: center;
   button {
+    border: none;
     height: 50px;
     width: 50px;
   }

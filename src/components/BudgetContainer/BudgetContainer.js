@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import PieChart from "./PieChart/PieChart";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { setBudgetItems } from "../../redux/reducer";
+import {
+  setBudgetItems,
+  handleCreate,
+  handleChange
+} from "../../redux/reducer";
 import { setUser } from "../../redux/userReducer";
 import BudgetItem from "./BudgetItem/BudgetItem";
 import AddBudgetItem from "../AddBudgetItem/AddBudgetItem";
@@ -20,6 +24,7 @@ class BudgetContainer extends Component {
   withBudgetData = (WrappedComponent, data) => {
     return <WrappedComponent data={data} />;
   };
+
   render() {
     let { budgetItems, user, colors } = this.props;
     let addBudgetItem = this.withBudgetData(AddBudgetItem, { ...this.props });
@@ -34,7 +39,7 @@ class BudgetContainer extends Component {
             {mappedBudgetItems}
           </React.Fragment>
         )}
-        {this.props.match.path == "/budget/create" && addBudgetItem})
+        {this.props.match.path == "/budget/create" && addBudgetItem}
       </div>
     );
   }
@@ -43,16 +48,21 @@ class BudgetContainer extends Component {
 const mapStateToProps = state => {
   console.log(state);
 
-  let { budgetItems, colors } = state.budget;
+  let { budgetItems, colors, title, amount, selectedColor } = state.budget;
   let { user } = state.user;
   return {
     budgetItems,
     colors,
+    title,
+    amount,
+    selectedColor,
     user
   };
 };
 const mapDispatchToProps = {
   setBudgetItems,
+  handleCreate,
+  handleChange,
   setUser
 };
 

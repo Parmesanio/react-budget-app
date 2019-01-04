@@ -18,12 +18,19 @@ const initialState = {
 
 //Action Types
 const SET_BUDGET_ITEMS = "SET_BUDGET_ITEMS",
-  CREATE_BUDGET_ITEM = "CREATE_BUDGET_ITEM";
+  CREATE_BUDGET_ITEM = "CREATE_BUDGET_ITEM",
+  SET_BUDGET_OBJECT = "SET_BUDGET_OBJECT";
+
 //Reducer Function
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case `${SET_BUDGET_ITEMS}_FULFILLED`:
       return { ...state, budgetItems: action.payload };
+    case `${SET_BUDGET_OBJECT}`:
+      return {
+        ...state,
+        [action.payload.target.name]: action.payload.target.value
+      };
     case `${CREATE_BUDGET_ITEM}_FULFILLED`:
       return { ...state, budgetItems: action.payload };
     default:
@@ -41,9 +48,19 @@ export function setBudgetItems(id) {
       .catch(err => console.log(err))
   };
 }
-export function handleCreate(title, amount, color) {
+export function handleChange(e) {
   return {
-    type: CREATE_BUDGET_ITEM
-    // payload:
+    type: SET_BUDGET_OBJECT,
+    payload: e
+  };
+}
+export function handleCreate(title, amount, color) {
+  console.log(title, +amount, color);
+  return {
+    type: CREATE_BUDGET_ITEM,
+    payload: axios
+      .post("/api/budget-items", { title, amount, color })
+      .then(res => res.data)
+      .catch(err => console.log(err))
   };
 }
