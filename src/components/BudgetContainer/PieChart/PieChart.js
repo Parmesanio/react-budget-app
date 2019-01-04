@@ -20,23 +20,21 @@ class PieChart extends Component {
     }
   }
   setData = () => {
-    console.log("fired");
-
     let data = [];
     let labels = [];
     let backgroundColor = [];
-    this.props.budgetItems.forEach(item => {
-      data.push(item.amount);
-      labels.push(item.title);
-      backgroundColor.push(item.color);
-    });
+    this.props.budgetItems &&
+      this.props.budgetItems.forEach(item => {
+        data.push(item.amount);
+        labels.push(item.title);
+        backgroundColor.push(item.color);
+      });
     this.setState(({ datasets }) => ({
       labels,
       datasets: [{ data, backgroundColor }]
     }));
   };
   render() {
-    console.log(this.props, this.state);
     return (
       <div>
         <Pie

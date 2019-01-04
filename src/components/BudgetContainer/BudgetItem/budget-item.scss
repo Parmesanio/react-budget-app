@@ -8,3 +8,11 @@
 #budget-item:last-child {
   border-bottom: 1px solid;
 }
+.options {
+  display: flex;
+
+  button {
+    height: 50px;
+    width: 50px;
+  }
+}

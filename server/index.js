@@ -3,6 +3,7 @@ const express = require("express"),
   massive = require("massive"),
   session = require("express-session"),
   budget = require("./controllers/budget_controller"),
+  auth = require("./controllers/auth_controller"),
   app = express();
 require("dotenv").config();
 
@@ -26,7 +27,15 @@ massive(process.env.CONNECTION_STRING)
   })
   .catch(err => console.log("Err in Massive"));
 //   --------------- ENDPOINTS
+// Budget Endpoints
 app.get("/api/budget-items/:id", budget.get);
+
+// User Endpoints
+app.get("/auth/callback", auth.auth0);
+// Session Endpoints
+app.get("/api/user-data", (req, res) => {
+  res.send(req.session.user);
+});
 const path = require("path");
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
