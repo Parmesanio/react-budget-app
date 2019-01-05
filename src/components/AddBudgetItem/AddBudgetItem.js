@@ -8,7 +8,9 @@ const AddBudgetItem = props => {
     selectedColor,
     colors,
     handleChange,
-    handleCreate
+    handleCreate,
+    history,
+    user
   } = props.data;
 
   let mappedColors =
@@ -32,7 +34,11 @@ const AddBudgetItem = props => {
         onChange={handleChange}
       />
       <div className="options">{mappedColors}</div>
-      <button onClick={() => handleCreate(title, amount, selectedColor)}>
+      <button
+        onClick={() =>
+          handleCreate(title, amount, selectedColor, history, user.id)
+        }
+      >
         Add to tracker
       </button>
     </form>

@@ -1,6 +1,7 @@
 import axios from "axios";
 const initialState = {
   budgetItems: null,
+  budget: 0,
   title: null,
   amount: null,
   colors: [
@@ -54,13 +55,16 @@ export function handleChange(e) {
     payload: e
   };
 }
-export function handleCreate(title, amount, color) {
-  console.log(title, +amount, color);
+export function handleCreate(title, amount, color, history, id) {
+  console.log(title, +amount, color, history);
   return {
     type: CREATE_BUDGET_ITEM,
     payload: axios
       .post("/api/budget-items", { title, amount, color })
-      .then(res => res.data)
+      .then(res => {
+        history.push(`/${id}`);
+        return res.data;
+      })
       .catch(err => console.log(err))
   };
 }

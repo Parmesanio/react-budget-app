@@ -7,7 +7,7 @@ import {
   handleCreate,
   handleChange
 } from "../../redux/reducer";
-import { setUser } from "../../redux/userReducer";
+import { setUser, setBudgetAmount } from "../../redux/userReducer";
 import BudgetItem from "./BudgetItem/BudgetItem";
 import AddBudgetItem from "../AddBudgetItem/AddBudgetItem";
 
@@ -17,7 +17,8 @@ class BudgetContainer extends Component {
     this.state = {};
   }
   componentDidMount() {
-    this.props.setBudgetItems(this.props.match.params.id);
+    this.props.match.params.id &&
+      this.props.setBudgetItems(this.props.match.params.id);
     this.props.setUser();
   }
   // HOC
@@ -26,35 +27,60 @@ class BudgetContainer extends Component {
   };
 
   render() {
-    let { budgetItems, user, colors } = this.props;
+    let {
+      budgetItems,
+      user,
+      setBudgetAmount,
+      handleChange,
+      budget
+    } = this.props;
+    console.log("budgetcontainer", this.props);
     let addBudgetItem = this.withBudgetData(AddBudgetItem, { ...this.props });
     let mappedBudgetItems =
       budgetItems && budgetItems.map(item => <BudgetItem {...item} />);
     return (
       <div>
-        Budget Container
-        {this.props.match.path == "/:id" && (
+        {user && !user.budget ? (
+          <form onSubmit={e => e.preventDefault()}>
+            <input
+              onChange={handleChange}
+              name="budget"
+              type="number"
+              placeholder="Monthly Budget"
+            />
+            <button onClick={() => setBudgetAmount(budget)}>Submit</button>
+          </form>
+        ) : budgetItems && budgetItems.length == 0 ? (
+          addBudgetItem
+        ) : this.props.match.path == "/:id" ? (
           <React.Fragment>
-            <PieChart budgetItems={budgetItems} />
+            {budgetItems && <PieChart budgetItems={budgetItems} />}
             {mappedBudgetItems}
           </React.Fragment>
+        ) : (
+          this.props.match.path == "/budget/create" && addBudgetItem
         )}
-        {this.props.match.path == "/budget/create" && addBudgetItem}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  console.log(state);
-
-  let { budgetItems, colors, title, amount, selectedColor } = state.budget;
+  let {
+    budgetItems,
+    colors,
+    title,
+    amount,
+    selectedColor,
+    budget
+  } = state.budget;
   let { user } = state.user;
   return {
     budgetItems,
     colors,
     title,
     amount,
+    budget,
     selectedColor,
     user
   };
@@ -63,7 +89,8 @@ const mapDispatchToProps = {
   setBudgetItems,
   handleCreate,
   handleChange,
-  setUser
+  setUser,
+  setBudgetAmount
 };
 
 export default connect(

@@ -18,5 +18,15 @@ module.exports = {
         res.send(items);
       })
       .catch(err => console.log(err));
+  },
+  setBudget: (req, res) => {
+    const db = req.app.get("db");
+    let { budget } = req.body;
+    db.update_user_budget({ budget, userId: req.session.user[0].id }).then(
+      updatedUser => {
+        req.session.user = updatedUser[0];
+        res.send(req.session.user);
+      }
+    );
   }
 };

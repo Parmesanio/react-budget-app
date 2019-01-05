@@ -29,9 +29,10 @@ $$ language sql;
 create table users (
     id bigint primary key default make_random_id(),
     auth0_id text,
-    username text,
+    name text,
     email text,
-    photos text,
+    picture text,
+    budget int,
     created_at date not null default current_date
 );
 CREATE SEQUENCE users_id_seq OWNED BY users.id;

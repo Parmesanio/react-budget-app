@@ -39,7 +39,7 @@ module.exports = {
             res.redirect(`/${user[0].id}`);
           } else {
             return db
-              .create_user({ auth0Id, name, email, picture })
+              .create_user({ auth0Id, name, email, picture, budget: 0 })
               .then(newUser => {
                 console.log("newUser", newUser);
                 req.session.user = newUser;
