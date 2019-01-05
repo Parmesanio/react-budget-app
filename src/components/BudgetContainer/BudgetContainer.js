@@ -37,7 +37,8 @@ class BudgetContainer extends Component {
     console.log("budgetcontainer", this.props);
     let addBudgetItem = this.withBudgetData(AddBudgetItem, { ...this.props });
     let mappedBudgetItems =
-      budgetItems && budgetItems.map(item => <BudgetItem {...item} />);
+      budgetItems &&
+      budgetItems.map(item => <BudgetItem {...item} {...this.props.user} />);
     return (
       <div>
         {user && !user.budget ? (
@@ -54,7 +55,9 @@ class BudgetContainer extends Component {
           addBudgetItem
         ) : this.props.match.path == "/:id" ? (
           <React.Fragment>
-            {budgetItems && <PieChart budgetItems={budgetItems} />}
+            {budgetItems && (
+              <PieChart budgetItems={budgetItems} {...this.props.user} />
+            )}
             {mappedBudgetItems}
           </React.Fragment>
         ) : (
