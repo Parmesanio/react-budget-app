@@ -20,6 +20,7 @@ const initialState = {
 //Action Types
 const SET_BUDGET_ITEMS = "SET_BUDGET_ITEMS",
   CREATE_BUDGET_ITEM = "CREATE_BUDGET_ITEM",
+  DELETE_BUDGET_ITEM = "DELETE_BUDGET_ITEM",
   SET_BUDGET_OBJECT = "SET_BUDGET_OBJECT";
 
 //Reducer Function
@@ -34,18 +35,23 @@ export default function reducer(state = initialState, action) {
       };
     case `${CREATE_BUDGET_ITEM}_FULFILLED`:
       return { ...state, budgetItems: action.payload };
+    case `${DELETE_BUDGET_ITEM}_FULFILLED`:
+      return { ...state, budgetItems: action.payload };
     default:
       return state;
   }
 }
 
 //Action Creators
-export function setBudgetItems(id) {
+export function setBudgetItems(id, history) {
   return {
     type: SET_BUDGET_ITEMS,
     payload: axios
       .get(`/api/budget-items/${id}`)
-      .then(res => res.data)
+      .then(res => {
+        // history.push(`/${id}`);
+        return res.data;
+      })
       .catch(err => console.log(err))
   };
 }
@@ -62,7 +68,19 @@ export function handleCreate(title, amount, color, history, id) {
     payload: axios
       .post("/api/budget-items", { title, amount, color })
       .then(res => {
-        history.push(`/${id}`);
+        // history.push(`/${id}`);
+        return res.data;
+      })
+      .catch(err => console.log(err))
+  };
+}
+export function handleDelete(id, userId) {
+  return {
+    type: DELETE_BUDGET_ITEM,
+    payload: axios
+      .delete(`/api/budget-items/${id}?userId=${userId}`)
+      .then(res => {
+        // history.push(`/${userId}`);
         return res.data;
       })
       .catch(err => console.log(err))

@@ -5,7 +5,7 @@ import AddBudgetItem from "./components/AddBudgetItem/AddBudgetItem";
 
 export default (
   <Switch>
-    <Route key="Create" path="/budget/create" component={BudgetContainer} />
+    {/* <Route path="/budget/create" component={BudgetContainer} /> */}
     <Route key={"BudgetContainer"} path="/:id" component={BudgetContainer} />
   </Switch>
 );

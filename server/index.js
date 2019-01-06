@@ -31,6 +31,7 @@ massive(process.env.CONNECTION_STRING)
 app.get("/api/budget-items/:id", budget.get);
 app.post("/api/budget-items", budget.post);
 app.post("/api/budget-amount", budget.setBudget);
+app.delete("/api/budget-items/:id", budget.deleteBudget);
 // User Endpoints
 app.get("/auth/callback", auth.auth0);
 // Session Endpoints

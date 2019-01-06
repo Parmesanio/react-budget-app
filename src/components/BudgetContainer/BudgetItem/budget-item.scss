@@ -4,6 +4,10 @@
   align-items: center;
   border-top: 1px solid;
   padding: 10px;
+  h1,
+  p {
+    width: 30%;
+  }
 }
 #budget-item:last-child {
   border-bottom: 1px solid;

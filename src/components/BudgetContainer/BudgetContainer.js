@@ -5,11 +5,13 @@ import { connect } from "react-redux";
 import {
   setBudgetItems,
   handleCreate,
-  handleChange
+  handleChange,
+  handleDelete
 } from "../../redux/reducer";
 import { setUser, setBudgetAmount } from "../../redux/userReducer";
 import BudgetItem from "./BudgetItem/BudgetItem";
 import AddBudgetItem from "../AddBudgetItem/AddBudgetItem";
+import BudgetForm from "../BudgetForm/BudgetForm";
 
 class BudgetContainer extends Component {
   constructor(props) {
@@ -17,9 +19,11 @@ class BudgetContainer extends Component {
     this.state = {};
   }
   componentDidMount() {
-    this.props.match.params.id &&
-      this.props.setBudgetItems(this.props.match.params.id);
+    console.log("cdm fired", this.props.user);
     this.props.setUser();
+    setTimeout(() => {
+      this.props.setBudgetItems(this.props.user.id);
+    }, 500);
   }
   // HOC
   withBudgetData = (WrappedComponent, data) => {
@@ -36,32 +40,35 @@ class BudgetContainer extends Component {
     } = this.props;
     console.log("budgetcontainer", this.props);
     let addBudgetItem = this.withBudgetData(AddBudgetItem, { ...this.props });
+    let budgetForm = this.withBudgetData(BudgetForm, { ...this.props });
+    let pieChart = this.withBudgetData(PieChart, { ...this.props });
     let mappedBudgetItems =
       budgetItems &&
-      budgetItems.map(item => <BudgetItem {...item} {...this.props.user} />);
+      budgetItems.map(item => (
+        <BudgetItem
+          itemTitle={item.title}
+          itemAmount={item.amount}
+          itemId={item.id}
+          {...this.props}
+        />
+      ));
     return (
       <div>
         {user && !user.budget ? (
-          <form onSubmit={e => e.preventDefault()}>
-            <input
-              onChange={handleChange}
-              name="budget"
-              type="number"
-              placeholder="Monthly Budget"
-            />
-            <button onClick={() => setBudgetAmount(budget)}>Submit</button>
-          </form>
+          budgetForm
         ) : budgetItems && budgetItems.length == 0 ? (
           addBudgetItem
-        ) : this.props.match.path == "/:id" ? (
-          <React.Fragment>
-            {budgetItems && (
-              <PieChart budgetItems={budgetItems} {...this.props.user} />
-            )}
-            {mappedBudgetItems}
-          </React.Fragment>
         ) : (
-          this.props.match.path == "/budget/create" && addBudgetItem
+          <React.Fragment>
+            {budgetItems &&
+              // <PieChart budgetItems={budgetItems} {...this.props.user} />
+              pieChart}
+            {this.props.location.pathname == "/budget/create"
+              ? addBudgetItem
+              : this.props.location.pathname == "/budget/monthly-budget"
+              ? budgetForm
+              : mappedBudgetItems}
+          </React.Fragment>
         )}
       </div>
     );
@@ -93,7 +100,8 @@ const mapDispatchToProps = {
   handleCreate,
   handleChange,
   setUser,
-  setBudgetAmount
+  setBudgetAmount,
+  handleDelete
 };
 
 export default connect(

@@ -17,7 +17,7 @@ class Header extends Component {
     let { user } = this.props;
     return (
       <header>
-        <h1>{user && user.username}</h1>
+        <h1>{user && user.name}</h1>
         <img src="" alt="" />
         <nav>
           {user ? (
@@ -26,7 +26,7 @@ class Header extends Component {
                 Dashboard
               </NavLink>
               <NavLink to="/budget/create">Add</NavLink>
-              {user.username}
+              <NavLink to="/budget/monthly-budget">Edit Budget</NavLink>
             </React.Fragment>
           ) : (
             <Login />

@@ -24,7 +24,7 @@ export function setUser() {
     type: SET_USER,
     payload: axios
       .get(`/api/user-data`)
-      .then(res => res.data[0])
+      .then(res => res.data)
       .catch(err => console.log(err))
   };
 }

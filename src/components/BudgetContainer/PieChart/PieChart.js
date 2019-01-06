@@ -5,29 +5,36 @@ class PieChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      labels: ["Budget"],
+      labels: [],
       datasets: [
         {
-          data: [this.props.budget],
+          data: [],
           backgroundColor: []
         }
       ]
     };
   }
+  componentDidMount() {
+    this.setData();
+  }
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.budgetItems !== this.props.budgetItems) {
-      console.log("fired");
+    if (
+      prevProps.data.user.budget !== this.props.data.user.budget ||
+      prevProps.data.budgetItems !== this.props.data.budgetItems
+    ) {
+      console.log("cdu fired");
       this.setData();
+      this.props.data.history.push(`/${this.props.data.id}`);
     }
   }
 
   setData = () => {
-    let data = [...this.state.datasets[0].data];
-    let labels = this.state.labels;
-    let backgroundColor = [...this.state.datasets[0].backgroundColor];
+    let data = [this.props.data.user.budget];
+    let labels = ["Budget"];
+    let backgroundColor = [];
     console.log(data, labels);
-    this.props.budgetItems &&
-      this.props.budgetItems.forEach(item => {
+    this.props.data.budgetItems &&
+      this.props.data.budgetItems.forEach(item => {
         data.unshift(item.amount);
         labels.unshift(item.title);
         backgroundColor.unshift(item.color);
@@ -40,6 +47,8 @@ class PieChart extends Component {
     }));
   };
   render() {
+    console.log(this.props.data);
+
     return (
       <div>
         <Pie

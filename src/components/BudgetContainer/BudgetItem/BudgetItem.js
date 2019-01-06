@@ -2,11 +2,16 @@ import React from "react";
 import "./budget-item.scss";
 
 const BudgetItem = props => {
+  console.log(props);
   return (
     <div id="budget-item">
-      <h1>{props.title}</h1>
-      <p>{Math.round((props.amount / props.budget) * 100)}%</p>
-      <p>{props.amount}</p>
+      <h1>{props.itemTitle}</h1>
+      <p>{Math.ceil((props.itemAmount / props.user.budget) * 100)}%</p>
+      <p>{props.itemAmount}</p>
+      <button>Edit</button>
+      <button onClick={() => props.handleDelete(props.itemId, props.user.id)}>
+        X
+      </button>
     </div>
   );
 };
