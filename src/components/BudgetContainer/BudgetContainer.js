@@ -1,17 +1,20 @@
 import React, { Component } from "react";
 import PieChart from "./PieChart/PieChart";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   setBudgetItems,
   handleCreate,
   handleChange,
-  handleDelete
+  handleDelete,
+  editMode,
+  editItem
 } from "../../redux/reducer";
 import { setUser, setBudgetAmount } from "../../redux/userReducer";
 import BudgetItem from "./BudgetItem/BudgetItem";
 import AddBudgetItem from "../AddBudgetItem/AddBudgetItem";
 import BudgetForm from "../BudgetForm/BudgetForm";
+import "./budgetcontainer.scss";
 
 class BudgetContainer extends Component {
   constructor(props) {
@@ -53,16 +56,23 @@ class BudgetContainer extends Component {
         />
       ));
     return (
-      <div>
+      <div className="budget-container">
         {user && !user.budget ? (
           budgetForm
         ) : budgetItems && budgetItems.length == 0 ? (
           addBudgetItem
         ) : (
           <React.Fragment>
-            {budgetItems &&
-              // <PieChart budgetItems={budgetItems} {...this.props.user} />
-              pieChart}
+            {budgetItems && pieChart}
+            {user && (
+              <div className="controls">
+                <NavLink to={`/${user.id}`} activeClassName="active">
+                  Dashboard
+                </NavLink>
+                <NavLink to="/budget/create">Add</NavLink>
+                <NavLink to="/budget/monthly-budget">Edit Budget</NavLink>
+              </div>
+            )}
             {this.props.location.pathname == "/budget/create"
               ? addBudgetItem
               : this.props.location.pathname == "/budget/monthly-budget"
@@ -82,7 +92,8 @@ const mapStateToProps = state => {
     title,
     amount,
     selectedColor,
-    budget
+    budget,
+    editing
   } = state.budget;
   let { user } = state.user;
   return {
@@ -92,7 +103,8 @@ const mapStateToProps = state => {
     amount,
     budget,
     selectedColor,
-    user
+    user,
+    editing
   };
 };
 const mapDispatchToProps = {
@@ -101,7 +113,9 @@ const mapDispatchToProps = {
   handleChange,
   setUser,
   setBudgetAmount,
-  handleDelete
+  handleDelete,
+  editMode,
+  editItem
 };
 
 export default connect(

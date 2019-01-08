@@ -22,11 +22,11 @@ class Header extends Component {
         <nav>
           {user ? (
             <React.Fragment>
-              <NavLink to={`/${user.id}`} activeClassName="active">
+              {/* <NavLink to={`/${user.id}`} activeClassName="active">
                 Dashboard
               </NavLink>
               <NavLink to="/budget/create">Add</NavLink>
-              <NavLink to="/budget/monthly-budget">Edit Budget</NavLink>
+              <NavLink to="/budget/monthly-budget">Edit Budget</NavLink> */}
             </React.Fragment>
           ) : (
             <Login />

@@ -14,14 +14,17 @@ const initialState = {
     "hsla(60, 71%, 50%, 1)",
     "hsla(25, 71%, 50%, 1)"
   ],
-  selectedColor: null
+  selectedColor: null,
+  editing: 0
 };
 
 //Action Types
 const SET_BUDGET_ITEMS = "SET_BUDGET_ITEMS",
   CREATE_BUDGET_ITEM = "CREATE_BUDGET_ITEM",
   DELETE_BUDGET_ITEM = "DELETE_BUDGET_ITEM",
-  SET_BUDGET_OBJECT = "SET_BUDGET_OBJECT";
+  EDIT_BUDGET_ITEM = "EDIT_BUDGET_ITEM",
+  SET_BUDGET_OBJECT = "SET_BUDGET_OBJECT",
+  EDIT_MODE = "EDIT_MODE";
 
 //Reducer Function
 export default function reducer(state = initialState, action) {
@@ -37,6 +40,26 @@ export default function reducer(state = initialState, action) {
       return { ...state, budgetItems: action.payload };
     case `${DELETE_BUDGET_ITEM}_FULFILLED`:
       return { ...state, budgetItems: action.payload };
+    case EDIT_MODE:
+      let budgetItem = state.budgetItems.find(
+        item => item.id == action.payload
+      );
+      return {
+        ...state,
+        editing: action.payload,
+        title: budgetItem.title,
+        amount: budgetItem.amount,
+        selectedColor: budgetItem.color
+      };
+    case `${EDIT_BUDGET_ITEM}_FULFILLED`:
+      return {
+        ...state,
+        budgetItems: action.payload,
+        editing: 0,
+        title: null,
+        amount: null,
+        selectedColor: null
+      };
     default:
       return state;
   }
@@ -84,5 +107,21 @@ export function handleDelete(id, userId) {
         return res.data;
       })
       .catch(err => console.log(err))
+  };
+}
+export function editItem(itemId, userId, title, color, amount) {
+  return {
+    type: EDIT_BUDGET_ITEM,
+    payload: axios
+      .put(`/api/budget-items/${itemId}`, { userId, title, amount, color })
+      .then(res => res.data)
+      .catch(err => console.log(err))
+  };
+}
+export function editMode(history, itemId) {
+  history.push("/budget/create");
+  return {
+    type: EDIT_MODE,
+    payload: itemId
   };
 }

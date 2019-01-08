@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Pie } from "react-chartjs-2";
+import "./piechart.scss";
 
 class PieChart extends Component {
   constructor(props) {
@@ -50,7 +51,7 @@ class PieChart extends Component {
     console.log(this.props.data);
 
     return (
-      <div>
+      <div className="pie-chart">
         <Pie
           data={this.state}
           height={200}
@@ -63,6 +64,11 @@ class PieChart extends Component {
             maintainAspectRatio: false
           }}
         />
+        <p className="label">
+          {this.state.datasets[0].data[this.state.datasets[0].data.length - 1]}
+          <br />
+          <small>left of {this.props.data.user.budget}</small>
+        </p>
       </div>
     );
   }

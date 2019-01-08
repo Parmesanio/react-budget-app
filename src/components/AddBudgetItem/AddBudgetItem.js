@@ -10,7 +10,9 @@ const AddBudgetItem = props => {
     handleChange,
     handleCreate,
     history,
-    user
+    user,
+    editing,
+    editItem
   } = props.data;
 
   let mappedColors =
@@ -26,21 +28,45 @@ const AddBudgetItem = props => {
     ));
   return (
     <form onSubmit={e => e.preventDefault()}>
-      <input name="title" placeholder="Title" onChange={handleChange} />
+      <input
+        name="title"
+        placeholder="Title"
+        onChange={handleChange}
+        value={title}
+      />
       <input
         name="amount"
         type="number"
         placeholder="Amount"
         onChange={handleChange}
+        value={amount}
       />
+      <p>
+        Current Color:{" "}
+        <button
+          className="options"
+          name="selectedColor"
+          style={{ background: selectedColor }}
+        />
+      </p>
       <div className="options">{mappedColors}</div>
-      <button
-        onClick={() =>
-          handleCreate(title, amount, selectedColor, history, user.id)
-        }
-      >
-        Add to tracker
-      </button>
+      {editing !== 0 ? (
+        <button
+          onClick={() =>
+            editItem(editing, user.id, title, selectedColor, amount)
+          }
+        >
+          Edit Item
+        </button>
+      ) : (
+        <button
+          onClick={() =>
+            handleCreate(title, amount, selectedColor, history, user.id)
+          }
+        >
+          Add to tracker
+        </button>
+      )}
     </form>
   );
 };
