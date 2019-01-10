@@ -5,17 +5,52 @@ const initialState = {
   title: null,
   amount: null,
   colors: [
+    // First Row
+    "hsla(360, 71%, 70%, 1)",
+    "hsla(25, 71%, 70%, 1)",
+    "hsla(60, 71%, 70%, 1)",
+    "hsla(125, 71%, 70%, 1)",
+    "hsla(255, 71%, 70%, 1)",
+    "hsla(240, 71%, 70%, 1)",
+    // Second Row
     "hsla(360, 71%, 50%, 1)",
-    "hsla(304, 71%, 50%, 1)",
-    "hsla(280, 71%, 50%, 1)",
-    "hsla(240, 71%, 50%, 1)",
-    "hsla(180, 71%, 50%, 1)",
-    "hsla(125, 71%, 50%, 1)",
+    "hsla(25, 71%, 50%, 1)",
     "hsla(60, 71%, 50%, 1)",
-    "hsla(25, 71%, 50%, 1)"
+    "hsla(125, 71%, 50%, 1)",
+    "hsla(255, 71%, 50%, 1)",
+    "hsla(240, 71%, 50%, 1)",
+    // Third Row
+    "hsla(360, 71%, 30%, 1)",
+    "hsla(25, 71%, 30%, 1)",
+    "hsla(60, 71%, 30%, 1)",
+    "hsla(125, 71%, 30%, 1)",
+    "hsla(255, 71%, 30%, 1)",
+    "hsla(240, 71%, 30%, 1)",
+    // First Row
+    "hsla(304, 71%, 70%, 1)",
+    "hsla(0, 0%, 70%, 1)",
+    "hsla(45, 71%, 70%, 1)",
+    "hsla(163, 71%, 70%, 1)",
+    "hsla(270, 71%, 70%, 1)",
+    "hsla(202, 71%, 70%, 1)",
+    // Second Row
+    "hsla(304, 71%, 50%, 1)",
+    "hsla(0, 0%, 50%, 1)",
+    "hsla(45, 71%, 50%, 1)",
+    "hsla(163, 71%, 50%, 1)",
+    "hsla(270, 71%, 50%, 1)",
+    "hsla(202, 71%, 50%, 1)",
+    // Third Row
+    "hsla(304, 71%, 30%, 1)",
+    "hsla(0, 0%, 30%, 1)",
+    "hsla(45, 71%, 30%, 1)",
+    "hsla(163, 71%, 30%, 1)",
+    "hsla(270, 71%, 30%, 1)",
+    "hsla(202, 71%, 30%, 1)"
   ],
   selectedColor: null,
-  editing: 0
+  editing: 0,
+  toggleColors: false
 };
 
 //Action Types
@@ -24,20 +59,32 @@ const SET_BUDGET_ITEMS = "SET_BUDGET_ITEMS",
   DELETE_BUDGET_ITEM = "DELETE_BUDGET_ITEM",
   EDIT_BUDGET_ITEM = "EDIT_BUDGET_ITEM",
   SET_BUDGET_OBJECT = "SET_BUDGET_OBJECT",
-  EDIT_MODE = "EDIT_MODE";
+  EDIT_MODE = "EDIT_MODE",
+  CANCEL_EDIT_MODE = "CANCEL_EDIT_MODE";
 
 //Reducer Function
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case `${SET_BUDGET_ITEMS}_FULFILLED`:
-      return { ...state, budgetItems: action.payload };
+      return {
+        ...state,
+        budgetItems: action.payload
+      };
     case `${SET_BUDGET_OBJECT}`:
       return {
         ...state,
-        [action.payload.target.name]: action.payload.target.value
+        [action.payload.target.name]: action.payload.target.value,
+        toggleColors: true
       };
     case `${CREATE_BUDGET_ITEM}_FULFILLED`:
-      return { ...state, budgetItems: action.payload };
+      return {
+        ...state,
+        budgetItems: action.payload,
+        title: null,
+        amount: null,
+        selectedColor: null,
+        toggleColors: false
+      };
     case `${DELETE_BUDGET_ITEM}_FULFILLED`:
       return { ...state, budgetItems: action.payload };
     case EDIT_MODE:
@@ -51,6 +98,16 @@ export default function reducer(state = initialState, action) {
         amount: budgetItem.amount,
         selectedColor: budgetItem.color
       };
+    case CANCEL_EDIT_MODE:
+      return {
+        ...state,
+        editing: null,
+        title: null,
+        amount: null,
+        selectedColor: null,
+        toggleColors: false
+      };
+
     case `${EDIT_BUDGET_ITEM}_FULFILLED`:
       return {
         ...state,
@@ -58,10 +115,11 @@ export default function reducer(state = initialState, action) {
         editing: 0,
         title: null,
         amount: null,
-        selectedColor: null
+        selectedColor: null,
+        toggleColors: false
       };
     default:
-      return state;
+      return { ...state };
   }
 }
 
@@ -72,7 +130,6 @@ export function setBudgetItems(id, history) {
     payload: axios
       .get(`/api/budget-items/${id}`)
       .then(res => {
-        // history.push(`/${id}`);
         return res.data;
       })
       .catch(err => console.log(err))
@@ -123,5 +180,11 @@ export function editMode(history, itemId) {
   return {
     type: EDIT_MODE,
     payload: itemId
+  };
+}
+export function cancelEditMode(history, id) {
+  history.push(`/${id}`);
+  return {
+    type: CANCEL_EDIT_MODE
   };
 }

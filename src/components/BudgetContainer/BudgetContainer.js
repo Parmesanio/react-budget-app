@@ -8,7 +8,8 @@ import {
   handleChange,
   handleDelete,
   editMode,
-  editItem
+  editItem,
+  cancelEditMode
 } from "../../redux/reducer";
 import { setUser, setBudgetAmount } from "../../redux/userReducer";
 import BudgetItem from "./BudgetItem/BudgetItem";
@@ -22,7 +23,6 @@ class BudgetContainer extends Component {
     this.state = {};
   }
   componentDidMount() {
-    console.log("cdm fired", this.props.user);
     this.props.setUser();
     setTimeout(() => {
       this.props.setBudgetItems(this.props.user.id);
@@ -34,13 +34,7 @@ class BudgetContainer extends Component {
   };
 
   render() {
-    let {
-      budgetItems,
-      user,
-      setBudgetAmount,
-      handleChange,
-      budget
-    } = this.props;
+    let { budgetItems, user, editing } = this.props;
     console.log("budgetcontainer", this.props);
     let addBudgetItem = this.withBudgetData(AddBudgetItem, { ...this.props });
     let budgetForm = this.withBudgetData(BudgetForm, { ...this.props });
@@ -64,15 +58,6 @@ class BudgetContainer extends Component {
         ) : (
           <React.Fragment>
             {budgetItems && pieChart}
-            {user && (
-              <div className="controls">
-                <NavLink to={`/${user.id}`} activeClassName="active">
-                  Dashboard
-                </NavLink>
-                <NavLink to="/budget/create">Add</NavLink>
-                <NavLink to="/budget/monthly-budget">Edit Budget</NavLink>
-              </div>
-            )}
             {this.props.location.pathname == "/budget/create"
               ? addBudgetItem
               : this.props.location.pathname == "/budget/monthly-budget"
@@ -93,7 +78,8 @@ const mapStateToProps = state => {
     amount,
     selectedColor,
     budget,
-    editing
+    editing,
+    toggleColors
   } = state.budget;
   let { user } = state.user;
   return {
@@ -104,7 +90,8 @@ const mapStateToProps = state => {
     budget,
     selectedColor,
     user,
-    editing
+    editing,
+    toggleColors
   };
 };
 const mapDispatchToProps = {
@@ -115,7 +102,8 @@ const mapDispatchToProps = {
   setBudgetAmount,
   handleDelete,
   editMode,
-  editItem
+  editItem,
+  cancelEditMode
 };
 
 export default connect(

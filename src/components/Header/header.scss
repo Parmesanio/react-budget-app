@@ -6,8 +6,55 @@
     justify-content: space-between;
     align-items: center;
     height: 60px;
+    position: relative;
+    h1 {
+      padding-left: 10px;
+    }
+    nav {
+      background: #3e5ba2;
+      position: absolute;
+      height: 0%;
+      top: 60px;
+      width: 100%;
+      transition: 0.35s all ease-in-out;
+      overflow: hidden;
+      .controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+    .menu {
+      color: #fff;
+      cursor: pointer;
+      font-size: 1.5em;
+      width: 15%;
+    }
+    .show {
+      height: 40%;
+    }
+    a {
+      color: #fff;
+      cursor: pointer;
+      width: 30%;
+    }
     .active {
-      color: orange;
+      color: #6ca23e;
+    }
+    .add-item {
+      background: #6ca23e;
+      box-shadow: 0px 0px 10px -1px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 4vh;
+      height: 50px;
+      width: 50px;
+      position: fixed;
+      bottom: 5%;
+      right: 5%;
+      z-index: 2;
     }
   }
 }

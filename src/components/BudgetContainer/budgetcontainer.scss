@@ -1,16 +1,15 @@
 .budget-container {
   max-width: 800px;
   margin: 0 auto;
+  #budget-item:nth-child(2n) {
+    background: #3b59a426;
+  }
+
   .controls {
     background: #3e5ba2;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 30px;
-    a {
-      color: #fff;
-      cursor: pointer;
-      width: 30%;
-    }
   }
 }

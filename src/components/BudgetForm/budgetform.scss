@@ -1,0 +1,35 @@
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 84.375%;
+  margin: 0 auto;
+  text-align: left;
+  margin-bottom: 1em;
+  label,
+  input {
+    display: inline-block;
+    margin: 5px auto;
+  }
+  label {
+    text-align: left;
+    width: 30%;
+  }
+  input {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    padding: 5px;
+    width: 70%;
+  }
+  button {
+    border-radius: 3px;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    font-weight: 400;
+    background: #6ca23e;
+    margin: 1.5em auto;
+    width: 100%;
+  }
+}

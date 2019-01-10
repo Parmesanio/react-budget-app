@@ -9,10 +9,12 @@ const AddBudgetItem = props => {
     colors,
     handleChange,
     handleCreate,
+    handleDelete,
     history,
     user,
     editing,
-    editItem
+    editItem,
+    toggleColors
   } = props.data;
 
   let mappedColors =
@@ -20,7 +22,6 @@ const AddBudgetItem = props => {
     colors.map((color, i) => (
       <button
         onClick={handleChange}
-        className="options"
         name="selectedColor"
         value={color}
         style={{ background: color }}
@@ -28,43 +29,59 @@ const AddBudgetItem = props => {
     ));
   return (
     <form onSubmit={e => e.preventDefault()}>
-      <input
-        name="title"
-        placeholder="Title"
-        onChange={handleChange}
-        value={title}
-      />
-      <input
-        name="amount"
-        type="number"
-        placeholder="Amount"
-        onChange={handleChange}
-        value={amount}
-      />
-      <p>
-        Current Color:{" "}
+      <div className="inputs">
+        <label>Title</label>
+        <input
+          name="title"
+          placeholder="Ex. Groceries"
+          onChange={handleChange}
+          value={title}
+        />
+        <label>Amount</label>
+        <input
+          name="amount"
+          type="number"
+          placeholder="Ex. 300"
+          onChange={handleChange}
+          value={amount}
+        />
+        <label>Color</label>
         <button
-          className="options"
+          onClick={handleChange}
           name="selectedColor"
           style={{ background: selectedColor }}
         />
-      </p>
-      <div className="options">{mappedColors}</div>
-      {editing !== 0 ? (
-        <button
-          onClick={() =>
-            editItem(editing, user.id, title, selectedColor, amount)
-          }
-        >
-          Edit Item
-        </button>
+      </div>
+      <div className={`${toggleColors ? "options" : "hidden"}`}>
+        {mappedColors}
+      </div>
+      {editing ? (
+        <React.Fragment>
+          <button
+            className="submit-button"
+            onClick={() =>
+              editItem(editing, user.id, title, selectedColor, amount)
+            }
+          >
+            Edit Item
+          </button>
+          <button
+            className="delete-item"
+            onClick={() =>
+              handleDelete(editing, user.id, title, selectedColor, amount)
+            }
+          >
+            Delete Item
+          </button>
+        </React.Fragment>
       ) : (
         <button
+          className="submit-button"
           onClick={() =>
             handleCreate(title, amount, selectedColor, history, user.id)
           }
         >
-          Add to tracker
+          Add
         </button>
       )}
     </form>

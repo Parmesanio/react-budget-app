@@ -23,7 +23,6 @@ class PieChart extends Component {
       prevProps.data.user.budget !== this.props.data.user.budget ||
       prevProps.data.budgetItems !== this.props.data.budgetItems
     ) {
-      console.log("cdu fired");
       this.setData();
       this.props.data.history.push(`/${this.props.data.id}`);
     }
@@ -33,13 +32,11 @@ class PieChart extends Component {
     let data = [this.props.data.user.budget];
     let labels = ["Budget"];
     let backgroundColor = [];
-    console.log(data, labels);
     this.props.data.budgetItems &&
       this.props.data.budgetItems.forEach(item => {
         data.unshift(item.amount);
         labels.unshift(item.title);
         backgroundColor.unshift(item.color);
-        console.log(data, labels);
         data[data.length - 1] -= item.amount;
       });
     this.setState(({ datasets }) => ({
@@ -48,8 +45,6 @@ class PieChart extends Component {
     }));
   };
   render() {
-    console.log(this.props.data);
-
     return (
       <div className="pie-chart">
         <Pie
@@ -65,9 +60,14 @@ class PieChart extends Component {
           }}
         />
         <p className="label">
-          {this.state.datasets[0].data[this.state.datasets[0].data.length - 1]}
-          <br />
-          <small>left of {this.props.data.user.budget}</small>
+          {Math.ceil(
+            (this.state.datasets[0].data[
+              this.state.datasets[0].data.length - 1
+            ] /
+              this.props.data.user.budget) *
+              100
+          )}
+          %<span>left</span>
         </p>
       </div>
     );
