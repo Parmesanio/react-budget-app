@@ -1,16 +1,23 @@
-.pie-chart {
-  height: 50vh;
-  margin: 5vh auto;
-  position: relative;
-  p.label {
-    font-size: 8vh;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    span {
-      display: block;
-      font-size: 4vh;
+@media only screen and (min-width: 0px) {
+  .pie-chart {
+    height: 285px;
+    margin: 5vh auto;
+    position: relative;
+    p.label {
+      font-size: 8vh;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      span {
+        display: block;
+        font-size: 4vh;
+      }
     }
+  }
+}
+@media only screen and (min-width: 768px) {
+  .pie-chart {
+    height: 50vh;
   }
 }

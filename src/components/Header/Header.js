@@ -14,7 +14,7 @@ class Header extends Component {
     };
   }
   componentDidMount() {
-    this.props.setUser();
+    this.props.location.pathname !== "/" && this.props.setUser();
   }
   handleToggle = () => {
     this.setState({
@@ -28,47 +28,44 @@ class Header extends Component {
     let { isToggled } = this.state;
     return (
       <header>
-        <h1>{user && user.name}</h1>
-        <img src="" alt="" />
-        <nav className={`${isToggled ? "show" : ""}`}>
-          {user && (
-            <div className="controls">
-              {editing ? (
-                <React.Fragment>
-                  <button
-                    onClick={() =>
-                      this.props.cancelEditMode(this.props.history, user.id)
-                    }
-                  >
-                    Cancel
-                  </button>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <NavLink to={`/${user.id}`} activeClassName="active">
-                    Dashboard
-                  </NavLink>
-                  <NavLink to="/budget/monthly-budget" activeClassName="active">
-                    Edit Budget
-                  </NavLink>
-                </React.Fragment>
-              )}
-            </div>
-          )}
-        </nav>
-        {this.props.location.pathname !== "/budget/monthly-budget" &&
-          this.props.location.pathname !== "/budget/create" && (
-            <NavLink
-              to="/budget/create"
-              className="add-item"
-              activeClassName="active"
-            >
-              +
-            </NavLink>
-          )}
-        <button className="menu" onClick={this.handleToggle}>
-          {isToggled ? `x` : "☰"}
-        </button>
+        <div>
+          <h1>{user && user.name}</h1>
+          <img src="" alt="" />
+          <nav className={`${isToggled ? "show" : ""}`}>
+            {user ? (
+              <div className="controls">
+                {editing ? (
+                  <React.Fragment>
+                    <button
+                      onClick={() =>
+                        this.props.cancelEditMode(this.props.history, user.id)
+                      }
+                    >
+                      Cancel
+                    </button>
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    <NavLink to={`/${user.id}`} activeClassName="active">
+                      Dashboard
+                    </NavLink>
+                    <NavLink
+                      to="/budget/monthly-budget"
+                      activeClassName="active"
+                    >
+                      Edit Budget
+                    </NavLink>
+                  </React.Fragment>
+                )}
+              </div>
+            ) : (
+              <Login />
+            )}
+          </nav>
+          <button className="menu" onClick={this.handleToggle}>
+            {isToggled ? `x` : "☰"}
+          </button>
+        </div>
       </header>
     );
   }

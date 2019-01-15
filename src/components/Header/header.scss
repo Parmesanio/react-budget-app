@@ -1,60 +1,71 @@
 @media only screen and (min-width: 0px) {
   header {
     background: #3e5ba2;
-    color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
+    height: 70px;
     position: relative;
-    h1 {
-      padding-left: 10px;
-    }
-    nav {
-      background: #3e5ba2;
-      position: absolute;
-      height: 0%;
-      top: 60px;
+    div {
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       width: 100%;
-      transition: 0.35s all ease-in-out;
-      overflow: hidden;
-      .controls {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+      h1 {
+        padding-left: 10px;
+      }
+      nav {
+        background: #3e5ba2;
+        position: absolute;
+        max-height: 0;
+        top: 70px;
+        width: 100%;
+        transition: 0.35s all ease-in-out;
+        overflow: hidden;
+        z-index: 9999;
+        .controls {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          a {
+            padding: 10px;
+          }
+        }
+      }
+      .menu {
+        background: transparent;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        font-size: 1.5em;
+        width: 15%;
+      }
+      .show {
+        max-height: 100vh;
+      }
+      a,
+      button {
+        color: #fff;
+        cursor: pointer;
+      }
+      .active {
+        color: #6ca23e;
       }
     }
-    .menu {
-      color: #fff;
-      cursor: pointer;
-      font-size: 1.5em;
-      width: 15%;
-    }
-    .show {
-      height: 40%;
-    }
-    a {
-      color: #fff;
-      cursor: pointer;
-      width: 30%;
-    }
-    .active {
-      color: #6ca23e;
-    }
-    .add-item {
-      background: #6ca23e;
-      box-shadow: 0px 0px 10px -1px rgba(0, 0, 0, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      font-size: 4vh;
-      height: 50px;
-      width: 50px;
-      position: fixed;
-      bottom: 5%;
-      right: 5%;
-      z-index: 2;
+  }
+}
+@media only screen and (min-width: 768px) {
+  header {
+    font-size: 2vh;
+    div {
+      nav {
+        .controls {
+          font-size: 2vh;
+        }
+      }
     }
   }
 }

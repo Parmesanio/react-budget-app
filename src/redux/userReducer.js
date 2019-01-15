@@ -20,6 +20,8 @@ export default function reducer(state = initialState, action) {
 
 //Action Creators
 export function setUser() {
+  console.log("SetUser Fired");
+
   return {
     type: SET_USER,
     payload: axios

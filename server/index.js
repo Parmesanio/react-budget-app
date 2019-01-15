@@ -19,7 +19,8 @@ app.use(
     }
   })
 );
-app.use(express.static(`__dirname/../build`));
+// app.use(express.static(`__dirname/../build`));
+app.use(express.static(`${__dirname}/../build`));
 massive(process.env.CONNECTION_STRING)
   .then(db => {
     app.set("db", db);

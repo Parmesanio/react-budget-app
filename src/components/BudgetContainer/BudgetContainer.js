@@ -26,7 +26,7 @@ class BudgetContainer extends Component {
     this.props.setUser();
     setTimeout(() => {
       this.props.setBudgetItems(this.props.user.id);
-    }, 500);
+    }, 800);
   }
   // HOC
   withBudgetData = (WrappedComponent, data) => {
@@ -65,6 +65,16 @@ class BudgetContainer extends Component {
               : mappedBudgetItems}
           </React.Fragment>
         )}
+        {this.props.location.pathname !== "/budget/monthly-budget" &&
+          this.props.location.pathname !== "/budget/create" && (
+            <NavLink
+              to="/budget/create"
+              className="add-item"
+              activeClassName="active"
+            >
+              +
+            </NavLink>
+          )}
       </div>
     );
   }

@@ -1,6 +1,8 @@
 const axios = require("axios");
 module.exports = {
   auth0: (req, res) => {
+    console.log("/auth/callback fired ============");
+
     let redirect_uri =
       process.env.HOST == "localhost"
         ? `http://${req.headers.host}/auth/callback`
