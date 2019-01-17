@@ -14,7 +14,11 @@ const Login = props => {
       process.env.REACT_APP_AUTH0_CLIENT_ID
     }&scope=${scope}&redirect_uri=${redirectUri}&response_type=code`;
   };
-  return <button onClick={login}>Log In</button>;
+  return (
+    <button className="signup" onClick={login}>
+      Sign up
+    </button>
+  );
 };
 
 export default Login;

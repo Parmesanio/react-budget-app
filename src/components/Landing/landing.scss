@@ -1,0 +1,45 @@
+.landing {
+  background: url("../../images//landing.jpg") no-repeat;
+  background-size: cover;
+  background-position-x: 30%;
+  color: #fff;
+  min-height: 60vh;
+  font-size: 4vh;
+  position: relative;
+  .landing-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    h1 {
+      margin-bottom: 2em;
+    }
+    .overlay {
+      background: rgba(62, 91, 162, 0.3);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    .landing-buttons {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      width: 100%;
+      button {
+        background: transparent;
+        border: 1px solid #fff;
+        border-radius: 20px;
+        color: #fff;
+        padding: 15px;
+        width: 40%;
+      }
+      .signup {
+        background: #6ca23e;
+        border: none;
+      }
+    }
+  }
+}
