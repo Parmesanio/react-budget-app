@@ -40,6 +40,10 @@ app.get("/auth/callback", auth.auth0);
 app.get("/api/user-data", (req, res) => {
   res.send(req.session.user);
 });
+app.post("/api/user-data", (req, res) => {
+  req.session.destroy();
+  res.send("Successfully logged out");
+});
 const path = require("path");
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
