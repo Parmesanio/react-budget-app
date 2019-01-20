@@ -2,6 +2,8 @@ module.exports = {
   get: (req, res) => {
     const db = req.app.get("db");
     let { id } = req.params;
+    console.log("get budget items fired", id);
+
     db.get_budget_items(+id)
       .then(items => {
         res.send(items);
@@ -24,7 +26,12 @@ module.exports = {
 
     db.update_user_budget({ budget, userId: req.session.user.id }).then(
       updatedUser => {
-        req.session.user = updatedUser[0];
+        req.session.user = {
+          id: updatedUser[0].id,
+          username: updatedUser[0].username,
+          email: updatedUser[0].email,
+          budget: updatedUser[0].budget
+        };
         res.send(req.session.user);
       }
     );

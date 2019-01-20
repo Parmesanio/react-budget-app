@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { cancelEditMode } from "../../redux/reducer";
-import { setUser } from "../../redux/userReducer";
-import Login from "../Login/Login";
+import { setUser, logout, handleMessage } from "../../redux/userReducer";
 import "./header.scss";
 
 class Header extends Component {
@@ -14,7 +13,7 @@ class Header extends Component {
     };
   }
   componentDidMount() {
-    this.props.location.pathname !== "/" && this.props.setUser();
+    // this.props.location.pathname !== "/" && this.props.setUser();
   }
   handleToggle = () => {
     this.setState({
@@ -22,15 +21,17 @@ class Header extends Component {
     });
   };
   render() {
-    console.log(this.props);
-
-    let { user, editing } = this.props;
+    let { user, editing, logout, logoutMessage } = this.props;
     let { isToggled } = this.state;
     return (
       <header>
         <div>
-          <h1>{user && user.name}</h1>
+          <h1>Budget Tracker</h1>
           <img src="" alt="" />
+          <div
+            className={`${isToggled ? "show-overlay" : "hide-overlay"}`}
+            onClick={this.handleToggle}
+          />
           <nav className={`${isToggled ? "show" : ""}`}>
             {user ? (
               <div className="controls">
@@ -55,32 +56,42 @@ class Header extends Component {
                     >
                       Edit Budget
                     </NavLink>
+                    <button onClick={() => logout(this.props.history)}>
+                      Log out
+                    </button>
                   </React.Fragment>
                 )}
               </div>
             ) : (
-              <Login />
+              <React.Fragment>
+                <NavLink to="/login">Log In</NavLink>
+                <NavLink to="/register">Register</NavLink>
+              </React.Fragment>
             )}
           </nav>
           <button className="menu" onClick={this.handleToggle}>
             {isToggled ? `x` : "☰"}
           </button>
         </div>
+        {logoutMessage && <p className="logoutMessage">{logoutMessage}</p>}
       </header>
     );
   }
 }
 const mapStateToProps = state => {
-  let { user } = state.user;
+  let { user, logoutMessage } = state.user;
   let { editing } = state.budget;
   return {
     user,
-    editing
+    editing,
+    logoutMessage
   };
 };
 const mapDispatchToProps = {
   setUser,
-  cancelEditMode
+  cancelEditMode,
+  logout,
+  handleMessage
 };
 
 export default withRouter(

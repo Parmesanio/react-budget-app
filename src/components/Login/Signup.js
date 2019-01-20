@@ -1,24 +1,53 @@
-import React from "react";
+import React, { Component } from "react";
 
-const Login = props => {
-  console.log(props);
-
-  const login = () => {
-    const redirectUri = encodeURIComponent(
-      `${window.location.origin}/auth/callback`
-    );
-    const scope = encodeURIComponent("openid profile email");
-    window.location = `https://${
-      process.env.REACT_APP_AUTH0_DOMAIN
-    }/authorize?client_id=${
-      process.env.REACT_APP_AUTH0_CLIENT_ID
-    }&scope=${scope}&redirect_uri=${redirectUri}&response_type=code`;
+class Signup extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: null,
+      email: null,
+      password: null
+    };
+  }
+  handleUserChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   };
-  return (
-    <button className="signup" onClick={login}>
-      Sign up
-    </button>
-  );
-};
+  render() {
+    let { createUser, history } = this.props.data;
+    return (
+      <form onSubmit={e => e.preventDefault()}>
+        <h1>Create an Account</h1>
+        <label>Username:</label>
+        <input name="username" onChange={e => this.handleUserChange(e)} />
+        <label>Email:</label>
+        <input
+          name="email"
+          onChange={e => this.handleUserChange(e)}
+          type="email"
+        />
+        <label>Password:</label>
+        <input
+          name="password"
+          onChange={e => this.handleUserChange(e)}
+          type="password"
+        />
+        <button
+          onClick={() =>
+            createUser(
+              this.state.username,
+              this.state.email,
+              this.state.password,
+              history
+            )
+          }
+        >
+          Start Budgeting
+        </button>
+      </form>
+    );
+  }
+}
 
-export default Login;
+export default Signup;

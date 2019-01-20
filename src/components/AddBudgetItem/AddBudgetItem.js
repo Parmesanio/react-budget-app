@@ -21,9 +21,10 @@ const AddBudgetItem = props => {
     colors &&
     colors.map((color, i) => (
       <button
+        key={i}
         onClick={handleChange}
         name="selectedColor"
-        value={color}
+        value={color || ""}
         style={{ background: color }}
       />
     ));
@@ -35,7 +36,7 @@ const AddBudgetItem = props => {
           name="title"
           placeholder="Ex. Groceries"
           onChange={handleChange}
-          value={title}
+          value={title || ""}
         />
         <label>Amount</label>
         <input
@@ -43,7 +44,7 @@ const AddBudgetItem = props => {
           type="number"
           placeholder="Ex. 300"
           onChange={handleChange}
-          value={amount}
+          value={amount || ""}
         />
         <label>Color</label>
         <button
@@ -67,9 +68,7 @@ const AddBudgetItem = props => {
           </button>
           <button
             className="delete-item"
-            onClick={() =>
-              handleDelete(editing, user.id, title, selectedColor, amount)
-            }
+            onClick={() => handleDelete(editing, user.id, history)}
           >
             Delete Item
           </button>

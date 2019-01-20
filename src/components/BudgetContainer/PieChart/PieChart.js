@@ -24,7 +24,6 @@ class PieChart extends Component {
       prevProps.data.budgetItems !== this.props.data.budgetItems
     ) {
       this.setData();
-      this.props.data.history.push(`/${this.props.data.id}`);
     }
   }
 

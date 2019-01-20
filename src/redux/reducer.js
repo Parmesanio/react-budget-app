@@ -124,7 +124,9 @@ export default function reducer(state = initialState, action) {
 }
 
 //Action Creators
-export function setBudgetItems(id, history) {
+export function setBudgetItems(id) {
+  console.log("setBudgetItems fired", id);
+
   return {
     type: SET_BUDGET_ITEMS,
     payload: axios
@@ -148,19 +150,19 @@ export function handleCreate(title, amount, color, history, id) {
     payload: axios
       .post("/api/budget-items", { title, amount, color })
       .then(res => {
-        // history.push(`/${id}`);
+        history.push(`/${id}`);
         return res.data;
       })
       .catch(err => console.log(err))
   };
 }
-export function handleDelete(id, userId) {
+export function handleDelete(id, userId, history) {
   return {
     type: DELETE_BUDGET_ITEM,
     payload: axios
       .delete(`/api/budget-items/${id}?userId=${userId}`)
       .then(res => {
-        // history.push(`/${userId}`);
+        history.push(`/${userId}`);
         return res.data;
       })
       .catch(err => console.log(err))

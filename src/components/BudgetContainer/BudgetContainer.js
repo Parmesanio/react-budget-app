@@ -11,11 +11,19 @@ import {
   editItem,
   cancelEditMode
 } from "../../redux/reducer";
-import { setUser, setBudgetAmount } from "../../redux/userReducer";
+import {
+  setUser,
+  setBudgetAmount,
+  createUser,
+  logIn,
+  handleLoginForm
+} from "../../redux/userReducer";
 import BudgetItem from "./BudgetItem/BudgetItem";
 import AddBudgetItem from "../AddBudgetItem/AddBudgetItem";
 import BudgetForm from "../BudgetForm/BudgetForm";
 import "./budgetcontainer.scss";
+import Login from "../Login/Login";
+import Signup from "../Login/Signup";
 
 class BudgetContainer extends Component {
   constructor(props) {
@@ -23,10 +31,14 @@ class BudgetContainer extends Component {
     this.state = {};
   }
   componentDidMount() {
-    this.props.setUser();
-    setTimeout(() => {
+    this.props.match.url !== "/login" &&
+      this.props.match.url !== "/register" &&
+      this.props.setUser(this.props.history);
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.user !== this.props.user) {
       this.props.setBudgetItems(this.props.user.id);
-    }, 800);
+    }
   }
   // HOC
   withBudgetData = (WrappedComponent, data) => {
@@ -36,6 +48,8 @@ class BudgetContainer extends Component {
   render() {
     let { budgetItems, user, editing } = this.props;
     console.log("budgetcontainer", this.props);
+    let login = this.withBudgetData(Login, { ...this.props });
+    let signup = this.withBudgetData(Signup, { ...this.props });
     let addBudgetItem = this.withBudgetData(AddBudgetItem, { ...this.props });
     let budgetForm = this.withBudgetData(BudgetForm, { ...this.props });
     let pieChart = this.withBudgetData(PieChart, { ...this.props });
@@ -43,6 +57,7 @@ class BudgetContainer extends Component {
       budgetItems &&
       budgetItems.map(item => (
         <BudgetItem
+          key={item.id}
           itemTitle={item.title}
           itemAmount={item.amount}
           itemId={item.id}
@@ -51,30 +66,43 @@ class BudgetContainer extends Component {
       ));
     return (
       <div className="budget-container">
-        {user && !user.budget ? (
-          budgetForm
-        ) : budgetItems && budgetItems.length == 0 ? (
-          addBudgetItem
+        {user ? (
+          user.budget == 0 ? (
+            <div className="step">
+              <h1>Step 1:</h1>
+              {budgetForm}
+            </div>
+          ) : budgetItems == null || budgetItems.length == 0 ? (
+            <div className="step">
+              <h1>Step 2:</h1>
+              {addBudgetItem}
+            </div>
+          ) : (
+            <React.Fragment>
+              {budgetItems && pieChart}
+              {this.props.location.pathname == "/budget/create"
+                ? addBudgetItem
+                : this.props.location.pathname == "/budget/monthly-budget"
+                ? budgetForm
+                : mappedBudgetItems}
+            </React.Fragment>
+          )
+        ) : this.props.location.pathname == "/login" ? (
+          login
+        ) : this.props.location.pathname == "/register" ? (
+          signup
         ) : (
-          <React.Fragment>
-            {budgetItems && pieChart}
-            {this.props.location.pathname == "/budget/create"
-              ? addBudgetItem
-              : this.props.location.pathname == "/budget/monthly-budget"
-              ? budgetForm
-              : mappedBudgetItems}
-          </React.Fragment>
+          "Loading..."
         )}
-        {this.props.location.pathname !== "/budget/monthly-budget" &&
-          this.props.location.pathname !== "/budget/create" && (
-            <NavLink
-              to="/budget/create"
-              className="add-item"
-              activeClassName="active"
-            >
-              +
-            </NavLink>
-          )}
+        {!this.props.location.pathname.includes("/budget") && (
+          <NavLink
+            to="/budget/create"
+            className="add-item"
+            activeClassName="active"
+          >
+            +
+          </NavLink>
+        )}
       </div>
     );
   }
@@ -91,7 +119,7 @@ const mapStateToProps = state => {
     editing,
     toggleColors
   } = state.budget;
-  let { user } = state.user;
+  let { user, username, password } = state.user;
   return {
     budgetItems,
     colors,
@@ -101,7 +129,9 @@ const mapStateToProps = state => {
     selectedColor,
     user,
     editing,
-    toggleColors
+    toggleColors,
+    username,
+    password
   };
 };
 const mapDispatchToProps = {
@@ -113,7 +143,10 @@ const mapDispatchToProps = {
   handleDelete,
   editMode,
   editItem,
-  cancelEditMode
+  cancelEditMode,
+  createUser,
+  logIn,
+  handleLoginForm
 };
 
 export default connect(

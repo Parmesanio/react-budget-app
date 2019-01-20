@@ -1,8 +1,19 @@
 @media only screen and(min-width: 0px) {
   .budget-container {
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto;
     position: relative;
+    .step {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 18vh;
+      h1 {
+        font-size: 3vh;
+        margin-bottom: 1em;
+      }
+    }
     #budget-item:nth-child(2n) {
       background: #3b59a426;
     }
@@ -34,7 +45,6 @@
 }
 @media only screen and (min-width: 768px) {
   .budget-container {
-    width: 90%;
     .add-item {
       height: 80px;
       width: 80px;

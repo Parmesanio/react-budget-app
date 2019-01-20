@@ -8,7 +8,7 @@ const BudgetItem = props => {
       <p>{Math.ceil((props.itemAmount / props.user.budget) * 100)}%</p>
       <p>${props.itemAmount}</p>
       <button onClick={() => props.editMode(props.history, props.itemId)}>
-        Edit
+        &#9998;
       </button>
     </div>
   );

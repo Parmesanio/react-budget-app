@@ -1,4 +1,4 @@
 insert into users
-(auth0_id, name, email, picture, budget)
-values (${auth0Id}, ${name}, ${email}, ${picture}, ${budget})
+(username, email, password, budget)
+values (${username}, ${email}, ${hashedPassword}, ${budget})
 returning *;

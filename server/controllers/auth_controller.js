@@ -1,4 +1,6 @@
-const axios = require("axios");
+const axios = require("axios"),
+  bcrypt = require("bcrypt"),
+  saltRounds = 12;
 module.exports = {
   auth0: (req, res) => {
     console.log("/auth/callback fired ============");
@@ -69,5 +71,50 @@ module.exports = {
         console.log("error in /auth/callback", error);
         res.status(500).send("Unexpected error");
       });
+  },
+  bcryptRegister: (req, res) => {
+    const db = req.app.get("db");
+    const { username, password, email } = req.body;
+    bcrypt.hash(password, saltRounds).then(hashedPassword => {
+      db.create_user({ username, email, hashedPassword, budget: 0 })
+        .then(newUser => {
+          console.log("newUser", newUser);
+          req.session.user = {
+            id: newUser[0].id,
+            username: newUser[0].username,
+            email: newUser[0].email,
+            budget: newUser[0].budget
+          };
+          res.send(req.session.user);
+        })
+        .catch(error => {
+          console.log("error", error);
+          res.status(500).json({ message: "Something bad happened! " });
+        });
+    });
+  },
+  bcryptLogin: (req, res) => {
+    const db = req.app.get("db");
+    const { username, password } = req.body;
+    console.log("login", req.body);
+    db.get_user_by_username([username]).then(users => {
+      if (users.length) {
+        bcrypt.compare(password, users[0].password).then(passwordsMatched => {
+          if (passwordsMatched) {
+            req.session.user = {
+              id: users[0].id,
+              username: users[0].username,
+              email: users[0].email,
+              budget: users[0].budget
+            };
+            res.json(req.session.user);
+          } else {
+            res.status(403).json({ message: "Wrong password" });
+          }
+        });
+      } else {
+        res.status(403).json({ message: "That user is not registered" });
+      }
+    });
   }
 };

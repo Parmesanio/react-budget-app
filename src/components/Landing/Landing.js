@@ -1,6 +1,5 @@
 import React from "react";
-import Login from "../Login/Login";
-import Signup from "../Login/Signup";
+import { NavLink } from "react-router-dom";
 import "./landing.scss";
 
 const Landing = props => {
@@ -9,8 +8,10 @@ const Landing = props => {
       <div className="landing-container">
         <h1>Track your budget.</h1>
         <div className="landing-buttons">
-          <Login />
-          <Signup />
+          <NavLink to="/login">Log In</NavLink>
+          <NavLink className="signup" to="/register">
+            Sign up
+          </NavLink>
         </div>
       </div>
     </section>

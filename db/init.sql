@@ -28,10 +28,9 @@ $$ language sql;
 -- User
 create table users (
     id bigint primary key default make_random_id(),
-    auth0_id text,
-    name text,
+    username text,
     email text,
-    picture text,
+    password text,
     budget int,
     created_at date not null default current_date
 );
@@ -44,7 +43,8 @@ create table budget_items (
     title text,
     amount int,
     color text,
-    user_id int references users(id)
+    user_id int references users(id),
+    created_at date not null default current_date
 )
 CREATE SEQUENCE budget_items_id_seq OWNED BY budget_items.id;
 select * from budget_items

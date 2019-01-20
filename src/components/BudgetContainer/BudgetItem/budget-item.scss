@@ -7,12 +7,17 @@
     padding: 10px;
     > * {
       font-size: 2.5vh;
+      background: none;
+      border: none;
     }
     h1 {
       width: 29%;
     }
     p {
       width: 10%;
+    }
+    button {
+      font-size: 3vh;
     }
   }
   form {
@@ -148,10 +153,11 @@
       font-weight: 400;
       background: #6ca23e;
       margin-top: 1.5em;
-      width: 100%;
+      width: 50%;
     }
     .delete-item {
       margin: 0;
+      width: 50%;
     }
   }
 }
