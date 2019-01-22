@@ -1,1 +1,1 @@
-select * from budget_items where user_id = $1
+select * from budget_items where user_id = $1 ORDER BY amount DESC;

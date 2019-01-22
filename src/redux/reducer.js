@@ -50,7 +50,8 @@ const initialState = {
   ],
   selectedColor: null,
   editing: 0,
-  toggleColors: false
+  toggleColors: false,
+  online: true
 };
 
 //Action Types
@@ -60,7 +61,8 @@ const SET_BUDGET_ITEMS = "SET_BUDGET_ITEMS",
   EDIT_BUDGET_ITEM = "EDIT_BUDGET_ITEM",
   SET_BUDGET_OBJECT = "SET_BUDGET_OBJECT",
   EDIT_MODE = "EDIT_MODE",
-  CANCEL_EDIT_MODE = "CANCEL_EDIT_MODE";
+  CANCEL_EDIT_MODE = "CANCEL_EDIT_MODE",
+  ONLINE_STATUS = "ONLINE_STATUS";
 
 //Reducer Function
 export default function reducer(state = initialState, action) {
@@ -118,6 +120,8 @@ export default function reducer(state = initialState, action) {
         selectedColor: null,
         toggleColors: false
       };
+    case ONLINE_STATUS:
+      return { ...state, online: !state.online };
     default:
       return { ...state };
   }
@@ -168,12 +172,15 @@ export function handleDelete(id, userId, history) {
       .catch(err => console.log(err))
   };
 }
-export function editItem(itemId, userId, title, color, amount) {
+export function editItem(itemId, userId, title, color, amount, history) {
   return {
     type: EDIT_BUDGET_ITEM,
     payload: axios
       .put(`/api/budget-items/${itemId}`, { userId, title, amount, color })
-      .then(res => res.data)
+      .then(res => {
+        history.push(`/${userId}`);
+        return res.data;
+      })
       .catch(err => console.log(err))
   };
 }
@@ -188,5 +195,10 @@ export function cancelEditMode(history, id) {
   history.push(`/${id}`);
   return {
     type: CANCEL_EDIT_MODE
+  };
+}
+export function onlineMode() {
+  return {
+    type: ONLINE_STATUS
   };
 }

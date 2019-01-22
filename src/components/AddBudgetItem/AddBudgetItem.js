@@ -1,4 +1,5 @@
 import React from "react";
+import { onlineMode } from "../../redux/reducer";
 
 const AddBudgetItem = props => {
   console.log(props);
@@ -14,9 +15,20 @@ const AddBudgetItem = props => {
     user,
     editing,
     editItem,
-    toggleColors
+    toggleColors,
+    onlineMode,
+    online
   } = props.data;
-
+  window.addEventListener("offline", function(e) {
+    e.preventDefault();
+    onlineMode();
+    // console.log(online);
+  });
+  window.addEventListener("online", function(e) {
+    e.preventDefault();
+    onlineMode();
+    // console.log(online);
+  });
   let mappedColors =
     colors &&
     colors.map((color, i) => (
@@ -28,6 +40,7 @@ const AddBudgetItem = props => {
         style={{ background: color }}
       />
     ));
+  console.log(online);
   return (
     <form onSubmit={e => e.preventDefault()}>
       <div className="inputs">
@@ -56,12 +69,12 @@ const AddBudgetItem = props => {
       <div className={`${toggleColors ? "options" : "hidden"}`}>
         {mappedColors}
       </div>
-      {editing ? (
+      {editing && online ? (
         <React.Fragment>
           <button
             className="submit-button"
             onClick={() =>
-              editItem(editing, user.id, title, selectedColor, amount)
+              editItem(editing, user.id, title, selectedColor, amount, history)
             }
           >
             Edit Item
@@ -73,7 +86,7 @@ const AddBudgetItem = props => {
             Delete Item
           </button>
         </React.Fragment>
-      ) : (
+      ) : online ? (
         <button
           className="submit-button"
           onClick={() =>
@@ -82,6 +95,8 @@ const AddBudgetItem = props => {
         >
           Add
         </button>
+      ) : (
+        "You are currently offline."
       )}
     </form>
   );

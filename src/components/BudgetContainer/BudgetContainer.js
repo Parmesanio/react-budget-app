@@ -9,7 +9,8 @@ import {
   handleDelete,
   editMode,
   editItem,
-  cancelEditMode
+  cancelEditMode,
+  onlineMode
 } from "../../redux/reducer";
 import {
   setUser,
@@ -44,8 +45,9 @@ class BudgetContainer extends Component {
   withBudgetData = (WrappedComponent, data) => {
     return <WrappedComponent data={data} />;
   };
-
   render() {
+    console.log(navigator, window);
+
     let { budgetItems, user, editing } = this.props;
     console.log("budgetcontainer", this.props);
     let login = this.withBudgetData(Login, { ...this.props });
@@ -64,6 +66,16 @@ class BudgetContainer extends Component {
           {...this.props}
         />
       ));
+    // window.addEventListener("offline", function(e) {
+    //   e.preventDefault();
+    //   onlineMode();
+    //   // console.log(online);
+    // });
+    // window.addEventListener("online", function(e) {
+    //   e.preventDefault();
+    //   onlineMode();
+    //   // console.log(online);
+    // });
     return (
       <div className="budget-container">
         {user ? (
@@ -94,15 +106,18 @@ class BudgetContainer extends Component {
         ) : (
           "Loading..."
         )}
-        {!this.props.location.pathname.includes("/budget") && (
-          <NavLink
-            to="/budget/create"
-            className="add-item"
-            activeClassName="active"
-          >
-            +
-          </NavLink>
-        )}
+        {!this.props.location.pathname.includes("/budget") &&
+          !this.props.location.pathname.includes("/login") &&
+          !this.props.location.pathname.includes("/register") &&
+          navigator.onLine && (
+            <NavLink
+              to="/budget/create"
+              className="add-item"
+              activeClassName="active"
+            >
+              +
+            </NavLink>
+          )}
       </div>
     );
   }
@@ -117,7 +132,8 @@ const mapStateToProps = state => {
     selectedColor,
     budget,
     editing,
-    toggleColors
+    toggleColors,
+    online
   } = state.budget;
   let { user, username, password } = state.user;
   return {
@@ -131,7 +147,8 @@ const mapStateToProps = state => {
     editing,
     toggleColors,
     username,
-    password
+    password,
+    online
   };
 };
 const mapDispatchToProps = {
@@ -146,9 +163,9 @@ const mapDispatchToProps = {
   cancelEditMode,
   createUser,
   logIn,
-  handleLoginForm
+  handleLoginForm,
+  onlineMode
 };
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps

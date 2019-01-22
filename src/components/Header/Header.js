@@ -12,9 +12,6 @@ class Header extends Component {
       isToggled: false
     };
   }
-  componentDidMount() {
-    // this.props.location.pathname !== "/" && this.props.setUser();
-  }
   handleToggle = () => {
     this.setState({
       isToggled: !this.state.isToggled
@@ -63,10 +60,10 @@ class Header extends Component {
                 )}
               </div>
             ) : (
-              <React.Fragment>
+              <div className="controls">
                 <NavLink to="/login">Log In</NavLink>
                 <NavLink to="/register">Register</NavLink>
-              </React.Fragment>
+              </div>
             )}
           </nav>
           <button className="menu" onClick={this.handleToggle}>

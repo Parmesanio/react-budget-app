@@ -17,35 +17,36 @@ class Signup extends Component {
   render() {
     let { createUser, history } = this.props.data;
     return (
-      <form onSubmit={e => e.preventDefault()}>
-        <h1>Create an Account</h1>
-        <label>Username:</label>
-        <input name="username" onChange={e => this.handleUserChange(e)} />
-        <label>Email:</label>
-        <input
-          name="email"
-          onChange={e => this.handleUserChange(e)}
-          type="email"
-        />
-        <label>Password:</label>
-        <input
-          name="password"
-          onChange={e => this.handleUserChange(e)}
-          type="password"
-        />
-        <button
-          onClick={() =>
-            createUser(
-              this.state.username,
-              this.state.email,
-              this.state.password,
-              history
-            )
-          }
-        >
-          Start Budgeting
-        </button>
-      </form>
+      <div className="login-signup-container">
+        <form className="signup-form" onSubmit={e => e.preventDefault()}>
+          <label>Username:</label>
+          <input name="username" onChange={e => this.handleUserChange(e)} />
+          <label>Email:</label>
+          <input
+            name="email"
+            onChange={e => this.handleUserChange(e)}
+            type="email"
+          />
+          <label>Password:</label>
+          <input
+            name="password"
+            onChange={e => this.handleUserChange(e)}
+            type="password"
+          />
+          <button
+            onClick={() =>
+              createUser(
+                this.state.username,
+                this.state.email,
+                this.state.password,
+                history
+              )
+            }
+          >
+            Start Budgeting
+          </button>
+        </form>
+      </div>
     );
   }
 }

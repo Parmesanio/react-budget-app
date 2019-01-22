@@ -1,0 +1,28 @@
+@media only screen and (min-width: 0px) {
+  .login-signup-container {
+    background: #3e5ba2;
+    color: #fff;
+    min-height: 100vh;
+    width: 100%;
+    .login-form,
+    .signup-form {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      > * {
+        width: 100%;
+      }
+    }
+    form.signup-form {
+    }
+  }
+}
+@media only screen and (min-width: 768px) {
+  .login-signup-container {
+    .login-form,
+    .signup-form {
+      max-width: 400px;
+    }
+  }
+}
