@@ -13,6 +13,13 @@
       > * {
         width: 100%;
       }
+      a {
+        color: #fff;
+        text-decoration: underline;
+      }
+      .active {
+        color: #6ca23e;
+      }
     }
     form.signup-form {
     }

@@ -6,6 +6,6 @@ import Landing from "./components/Landing/Landing";
 export default (
   <Switch>
     <Route key={"BudgetContainer"} path="/:id" component={BudgetContainer} />
-    <Route path="/" component={Landing} />
+    <Route exact path="/" component={Landing} />
   </Switch>
 );

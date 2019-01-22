@@ -6,7 +6,7 @@ const BudgetForm = props => {
   return (
     <form onSubmit={e => e.preventDefault()}>
       <div className="inputs">
-        <label>Budget</label>
+        <label>Monthly Budget</label>
         <input
           onChange={props.data.handleChange}
           name="budget"

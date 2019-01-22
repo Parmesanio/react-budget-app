@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { NavLink } from "react-router-dom";
 class Signup extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +19,16 @@ class Signup extends Component {
     return (
       <div className="login-signup-container">
         <form className="signup-form" onSubmit={e => e.preventDefault()}>
+          <p>
+            <NavLink exact to="/">
+              Home{" "}
+            </NavLink>
+            >
+            <NavLink activeClassName="active" to="/register">
+              Register
+            </NavLink>
+          </p>
+          <br />
           <label>Username:</label>
           <input name="username" onChange={e => this.handleUserChange(e)} />
           <label>Email:</label>
@@ -45,6 +55,12 @@ class Signup extends Component {
           >
             Start Budgeting
           </button>
+          <p>
+            Already have an account?{" "}
+            <NavLink activeClassName="active" to="/login">
+              Log In
+            </NavLink>
+          </p>
         </form>
       </div>
     );

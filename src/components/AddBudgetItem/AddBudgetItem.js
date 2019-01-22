@@ -17,7 +17,8 @@ const AddBudgetItem = props => {
     editItem,
     toggleColors,
     onlineMode,
-    online
+    online,
+    cancelEditMode
   } = props.data;
   window.addEventListener("offline", function(e) {
     e.preventDefault();
@@ -44,6 +45,14 @@ const AddBudgetItem = props => {
   return (
     <form onSubmit={e => e.preventDefault()}>
       <div className="inputs">
+        {editing && (
+          <React.Fragment>
+            <button onClick={() => cancelEditMode(history, user.id)}>
+              Cancel
+            </button>
+            <br />
+          </React.Fragment>
+        )}
         <label>Title</label>
         <input
           name="title"
