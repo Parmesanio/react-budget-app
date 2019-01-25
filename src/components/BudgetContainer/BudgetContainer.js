@@ -34,6 +34,7 @@ class BudgetContainer extends Component {
   componentDidMount() {
     this.props.match.url !== "/login" &&
       this.props.match.url !== "/register" &&
+      this.props.user.guest == false &&
       this.props.setUser(this.props.history);
   }
   componentDidUpdate(prevProps, prevState) {

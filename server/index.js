@@ -44,17 +44,14 @@ app.post("/api/budget-amount", ensureLoggedIn, budget.setBudget);
 app.delete("/api/budget-items/:id", ensureLoggedIn, budget.deleteBudget);
 app.put("/api/budget-items/:id", ensureLoggedIn, budget.editItem);
 // User Endpoints
-// app.get("/auth/callback", auth.auth0);
 app.post("/auth/register", auth.bcryptRegister);
 app.post("/auth/login", auth.bcryptLogin);
 // Session Endpoints
+app.get("/api/guest-data", auth.bcryptGuestLogin);
 app.get("/api/user-data", (req, res) => {
   res.send(req.session.user);
 });
-app.post("/api/user-data", (req, res) => {
-  req.session.destroy();
-  res.send("Successfully logged out");
-});
+app.post("/api/user-data", budget.destroySession);
 const path = require("path");
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));

@@ -1,5 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import { handleGuest } from "../../redux/userReducer";
 import "./landing.scss";
 
 const Landing = props => {
@@ -13,9 +15,26 @@ const Landing = props => {
             Sign up
           </NavLink>
         </div>
+        <br />
+        <button
+          className="guest-button"
+          onClick={() => props.handleGuest(props.history, window.setTimeout)}
+        >
+          Sign in as Guest
+        </button>
       </div>
     </section>
   );
 };
 
-export default Landing;
+const mapStateToProps = state => {
+  return {};
+};
+const mapDispatchToProps = {
+  handleGuest
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Landing);

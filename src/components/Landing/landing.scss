@@ -4,7 +4,7 @@
     background-size: cover;
     background-position-x: 30%;
     color: #fff;
-    min-height: 100vh;
+    min-height: 87vh;
     font-size: 4vh;
     position: relative;
     .landing-container {
@@ -42,6 +42,13 @@
           background: #6ca23e;
           border: none;
         }
+      }
+      .guest-button {
+        background: transparent;
+        border: 1px solid #fff;
+        border-radius: 3px;
+        color: #fff;
+        padding: 8px;
       }
     }
   }

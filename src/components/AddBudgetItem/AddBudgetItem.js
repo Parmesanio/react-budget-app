@@ -45,14 +45,14 @@ const AddBudgetItem = props => {
   return (
     <form onSubmit={e => e.preventDefault()}>
       <div className="inputs">
-        {editing && (
+        {editing ? (
           <React.Fragment>
             <button onClick={() => cancelEditMode(history, user.id)}>
               Cancel
             </button>
             <br />
           </React.Fragment>
-        )}
+        ) : null}
         <label>Title</label>
         <input
           name="title"

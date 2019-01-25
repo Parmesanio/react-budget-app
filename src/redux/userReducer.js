@@ -13,7 +13,8 @@ const SET_USER = "SET_USER",
   CREATE_USER = "CREATE_USER",
   LOG_IN_USER = "LOG_IN_USER",
   HANDLE_LOGIN_FORM = "HANDLE_LOGIN_FORM",
-  MESSAGE = "MESSAGE";
+  MESSAGE = "MESSAGE",
+  LOG_IN_GUEST = "LOG_IN_GUEST";
 //Reducer Function
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -24,6 +25,8 @@ export default function reducer(state = initialState, action) {
     case `${DESTROY_USER}_FULFILLED`:
       return { ...state, logoutMessage: action.payload, user: null };
     case `${LOG_IN_USER}_FULFILLED`:
+      return { ...state, user: action.payload };
+    case `${LOG_IN_GUEST}_FULFILLED`:
       return { ...state, user: action.payload };
     case MESSAGE:
       return { ...state, logoutMessage: null };
@@ -108,5 +111,20 @@ export function handleLoginForm(e) {
 export function handleMessage() {
   return {
     type: MESSAGE
+  };
+}
+export function handleGuest(history, setTimeOut) {
+  return {
+    type: LOG_IN_GUEST,
+    payload: axios
+      .get("/api/guest-data")
+      .then(res => {
+        setTimeOut(() => {
+          history.push(`/${res.data.id}`);
+        }, 500);
+
+        return res.data;
+      })
+      .catch(err => console.log(err))
   };
 }
