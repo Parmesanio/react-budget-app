@@ -1,6 +1,7 @@
 @media only screen and(min-width: 0px) {
   .budget-container {
     // position: relative;
+    min-height: 100vh;
     .step {
       display: flex;
       min-height: 87vh;

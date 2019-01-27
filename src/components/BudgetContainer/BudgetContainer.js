@@ -25,6 +25,7 @@ import BudgetForm from "../BudgetForm/BudgetForm";
 import "./budgetcontainer.scss";
 import Login from "../Login/Login";
 import Signup from "../Login/Signup";
+import axios from "axios";
 
 class BudgetContainer extends Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class BudgetContainer extends Component {
   componentDidMount() {
     this.props.match.url !== "/login" &&
       this.props.match.url !== "/register" &&
-      this.props.user.guest == false &&
+      !this.props.user.guest &&
       this.props.setUser(this.props.history);
   }
   componentDidUpdate(prevProps, prevState) {
@@ -47,8 +48,6 @@ class BudgetContainer extends Component {
     return <WrappedComponent data={data} />;
   };
   render() {
-    console.log(navigator, window);
-
     let { budgetItems, user, editing } = this.props;
     console.log("budgetcontainer", this.props);
     let login = this.withBudgetData(Login, { ...this.props });
@@ -64,19 +63,10 @@ class BudgetContainer extends Component {
           itemTitle={item.title}
           itemAmount={item.amount}
           itemId={item.id}
+          itemSpent={item.spent}
           {...this.props}
         />
       ));
-    // window.addEventListener("offline", function(e) {
-    //   e.preventDefault();
-    //   onlineMode();
-    //   // console.log(online);
-    // });
-    // window.addEventListener("online", function(e) {
-    //   e.preventDefault();
-    //   onlineMode();
-    //   // console.log(online);
-    // });
     return (
       <div className="budget-container">
         {user ? (
@@ -91,22 +81,22 @@ class BudgetContainer extends Component {
               {addBudgetItem}
             </div>
           ) : (
-            <React.Fragment>
-              {budgetItems && pieChart}
-              {this.props.location.pathname == "/budget/create"
-                ? addBudgetItem
-                : this.props.location.pathname == "/budget/monthly-budget"
-                ? budgetForm
-                : mappedBudgetItems}
-            </React.Fragment>
-          )
+                <React.Fragment>
+                  {budgetItems && pieChart}
+                  {this.props.location.pathname == "/budget/create"
+                    ? addBudgetItem
+                    : this.props.location.pathname == "/budget/monthly-budget"
+                      ? budgetForm
+                      : mappedBudgetItems}
+                </React.Fragment>
+              )
         ) : this.props.location.pathname == "/login" ? (
           login
         ) : this.props.location.pathname == "/register" ? (
           signup
         ) : (
-          "Loading..."
-        )}
+                "Loading..."
+              )}
         {!this.props.location.pathname.includes("/budget") &&
           !this.props.location.pathname.includes("/login") &&
           !this.props.location.pathname.includes("/register") &&
@@ -130,6 +120,7 @@ const mapStateToProps = state => {
     colors,
     title,
     amount,
+    spent,
     selectedColor,
     budget,
     editing,
@@ -142,6 +133,7 @@ const mapStateToProps = state => {
     colors,
     title,
     amount,
+    spent,
     budget,
     selectedColor,
     user,

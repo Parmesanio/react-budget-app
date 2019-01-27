@@ -15,20 +15,21 @@ module.exports = {
     }
   },
   post: (req, res) => {
-    let { title, amount, color } = req.body;
+    let { title, amount, color, spent } = req.body;
     let userId = req.session.user.id;
     if (req.session.user.guest) {
       let newBudgetItem = {
-        id: Math.random() * 1000000,
+        id: Math.floor(Math.random() * 100000),
         title,
         amount,
+        spent,
         color
       };
       req.session.user.guestBudgetItems.push(newBudgetItem);
       res.send(req.session.user.guestBudgetItems);
     } else {
       const db = req.app.get("db");
-      db.create_budget_item({ title, amount, color, userId: +userId })
+      db.create_budget_item({ title, amount, color, spent, userId: +userId })
         .then(items => {
           res.send(items);
         })
@@ -74,7 +75,7 @@ module.exports = {
   editItem: (req, res) => {
     const db = req.app.get("db");
     let { id } = req.params;
-    let { userId, title, amount, color } = req.body;
+    let { userId, title, amount, color, spent } = req.body;
     if (req.session.user.guest) {
       let index = req.session.user.guestBudgetItems.findIndex(
         item => item.id == id
@@ -83,12 +84,13 @@ module.exports = {
         id: req.session.user.guestBudgetItems[index].id,
         title,
         amount,
+        spent,
         color
       };
       res.send(req.session.user.guestBudgetItems);
     } else {
-      console.log(id, userId, title, amount, color);
-      db.edit_budget_item({ id: +id, user_id: +userId, title, amount, color })
+      console.log(id, userId, title, amount, color, spent);
+      db.edit_budget_item({ id: +id, user_id: +userId, title, amount, spent, color })
         .then(items => {
           res.send(items);
         })

@@ -6,6 +6,7 @@ const AddBudgetItem = props => {
   let {
     title,
     amount,
+    spent,
     selectedColor,
     colors,
     handleChange,
@@ -20,12 +21,12 @@ const AddBudgetItem = props => {
     online,
     cancelEditMode
   } = props.data;
-  window.addEventListener("offline", function(e) {
+  window.addEventListener("offline", function (e) {
     e.preventDefault();
     onlineMode();
     // console.log(online);
   });
-  window.addEventListener("online", function(e) {
+  window.addEventListener("online", function (e) {
     e.preventDefault();
     onlineMode();
     // console.log(online);
@@ -53,14 +54,22 @@ const AddBudgetItem = props => {
             <br />
           </React.Fragment>
         ) : null}
-        <label>Title</label>
+        <label>Title *</label>
         <input
           name="title"
           placeholder="Ex. Groceries"
           onChange={handleChange}
           value={title || ""}
         />
-        <label>Amount</label>
+        <label>Amount Spent</label>
+        <input
+          name="spent"
+          type="number"
+          placeholder="Ex. 300"
+          onChange={handleChange}
+          value={spent || ""}
+        />
+        <label>Total *</label>
         <input
           name="amount"
           type="number"
@@ -68,7 +77,7 @@ const AddBudgetItem = props => {
           onChange={handleChange}
           value={amount || ""}
         />
-        <label>Color</label>
+        <label>Color *</label>
         <button
           onClick={handleChange}
           name="selectedColor"
@@ -83,7 +92,7 @@ const AddBudgetItem = props => {
           <button
             className="submit-button"
             onClick={() =>
-              editItem(editing, user.id, title, selectedColor, amount, history)
+              editItem(editing, user.id, title, selectedColor, amount, spent, history)
             }
           >
             Edit Item
@@ -99,14 +108,14 @@ const AddBudgetItem = props => {
         <button
           className="submit-button"
           onClick={() =>
-            handleCreate(title, amount, selectedColor, history, user.id)
+            handleCreate(title, amount, spent, selectedColor, history, user.id)
           }
         >
           Add
         </button>
       ) : (
-        "You are currently offline."
-      )}
+            "You are currently offline."
+          )}
     </form>
   );
 };

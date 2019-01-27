@@ -2,10 +2,8 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   massive = require("massive"),
   session = require("express-session"),
-  // bcrypt = require("bcrypt"),
   budget = require("./controllers/budget_controller"),
   auth = require("./controllers/auth_controller"),
-  // saltRounds = 12,
   app = express();
 require("dotenv").config();
 
@@ -30,7 +28,7 @@ function ensureLoggedIn(req, res, next) {
 }
 // app.use(express.static(`__dirname/../build`));
 app.use(express.static(`${__dirname}/../build`));
-massive(process.env.CONNECTION_STRING)
+massive(process.env.HOST == "localhost" ? process.env.TEST_CONNECTION_STRING : process.env.CONNECTION_STRING)
   .then(db => {
     app.set("db", db);
     console.log("DB Set");

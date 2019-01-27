@@ -47,19 +47,8 @@ module.exports = {
     });
   },
   bcryptGuestLogin: (req, res) => {
-    // const db = req.app.get("db");
-    // db.get_guest().then(guest => {
-    //   req.session.user = {
-    //     id: guest[0].id,
-    //     username: guest[0].username,
-    //     email: guest[0].email,
-    //     budget: guest[0].budget,
-    //     guest: guest[0].guest
-    //   };
-    //   res.send(req.session.user);
-    // });
     req.session.user = {
-      id: 123971787453,
+      id: Math.floor(Math.random() * 100000),
       username: "Guest",
       email: "guest@guest.com",
       budget: 0,

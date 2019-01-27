@@ -4,6 +4,7 @@ const initialState = {
   budget: 0,
   title: null,
   amount: null,
+  spent: null,
   colors: [
     // First Row
     "hsla(360, 71%, 70%, 1)",
@@ -84,6 +85,7 @@ export default function reducer(state = initialState, action) {
         budgetItems: action.payload,
         title: null,
         amount: null,
+        spent: null,
         selectedColor: null,
         toggleColors: false
       };
@@ -106,6 +108,7 @@ export default function reducer(state = initialState, action) {
         editing: null,
         title: null,
         amount: null,
+        spent: null,
         selectedColor: null,
         toggleColors: false
       };
@@ -117,6 +120,7 @@ export default function reducer(state = initialState, action) {
         editing: 0,
         title: null,
         amount: null,
+        spent: null,
         selectedColor: null,
         toggleColors: false
       };
@@ -147,12 +151,12 @@ export function handleChange(e) {
     payload: e
   };
 }
-export function handleCreate(title, amount, color, history, id) {
-  console.log(title, +amount, color, history);
+export function handleCreate(title, amount, spent, color, history, id) {
+  console.log(title, +amount, +spent, color, history);
   return {
     type: CREATE_BUDGET_ITEM,
     payload: axios
-      .post("/api/budget-items", { title, amount, color })
+      .post("/api/budget-items", { title, amount, spent, color })
       .then(res => {
         history.push(`/${id}`);
         return res.data;
@@ -172,11 +176,11 @@ export function handleDelete(id, userId, history) {
       .catch(err => console.log(err))
   };
 }
-export function editItem(itemId, userId, title, color, amount, history) {
+export function editItem(itemId, userId, title, color, amount, spent, history) {
   return {
     type: EDIT_BUDGET_ITEM,
     payload: axios
-      .put(`/api/budget-items/${itemId}`, { userId, title, amount, color })
+      .put(`/api/budget-items/${itemId}`, { userId, title, amount, color, spent })
       .then(res => {
         history.push(`/${userId}`);
         return res.data;
