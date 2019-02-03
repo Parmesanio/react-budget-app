@@ -66,8 +66,9 @@ $$;
 
 select * from budget_items_function(1, 2019);
 -- Alters
-alter table budget_items alter amount type decimal
-alter table budget_items add column active boolean default true
+alter table budget_items add column spent decimal default 0;
+alter table budget_items add column active boolean default true;
+alter table budget_items alter amount type decimal;
 
 -- Duplicate rows & Reset spent
 insert into budget_items
