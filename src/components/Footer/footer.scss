@@ -1,3 +1,6 @@
-footer {
-  min-height: 20vh;
+@import '../../App.scss';
+@media only screen and (min-width: 0px) {
+  footer {
+    min-height: 20vh;
+  }
 }

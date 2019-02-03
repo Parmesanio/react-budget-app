@@ -61,7 +61,7 @@ const AddBudgetItem = props => {
           onChange={handleChange}
           value={title || ""}
         />
-        <label>Amount Spent</label>
+        <label>Amount Spent (Optional)</label>
         <input
           name="spent"
           type="number"

@@ -1,12 +1,13 @@
+@import '../../App.scss';
 @media only screen and (min-width: 0px) {
   header {
-    background: #3e5ba2;
+    background: $primary-color;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 70px;
     > div {
-      color: #fff;
+      color: $white;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -15,7 +16,7 @@
         padding-left: 10px;
       }
       .hide-overlay {
-        background: rgba(0, 0, 0, 0.5);
+        background: $overlay;
         position: absolute;
         top: 70px;
         height: 0;
@@ -28,7 +29,7 @@
         height: 100vh;
       }
       nav {
-        background: #3e5ba2;
+        background: $primary-color;
         position: absolute;
         height: 0;
         top: 70px;
@@ -56,7 +57,7 @@
       .menu {
         background: transparent;
         border: none;
-        color: #fff;
+        color: $white;
         cursor: pointer;
         font-size: 1.5em;
         width: 15%;
@@ -69,13 +70,13 @@
       }
       a,
       button {
-        color: #fff;
+        color: $white;
         cursor: pointer;
       }
     }
     p {
-      background: #6ca23e;
-      color: #fff;
+      background: $secondary-color;
+      color: $white;
       position: absolute;
       top: -100%;
       width: 100%;

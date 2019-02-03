@@ -1,3 +1,4 @@
+@import '../../App.scss';
 @media only screen and (min-width: 0px) {
   form {
     display: flex;
@@ -26,10 +27,10 @@
     button {
       border-radius: 3px;
       border: none;
-      color: #fff;
+      color: $white;
       padding: 10px;
       font-weight: 400;
-      background: #6ca23e;
+      background: $secondary-color;
       margin: 1.5em auto;
       width: 100%;
     }

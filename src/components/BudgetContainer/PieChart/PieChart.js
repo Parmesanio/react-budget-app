@@ -64,9 +64,9 @@ class PieChart extends Component {
               this.state.datasets[0].data.length - 1
             ] /
               this.props.data.user.budget) *
-              100
+            100
           )}
-          %<span>left</span>
+          %<span>remaining</span>
         </p>
       </div>
     );

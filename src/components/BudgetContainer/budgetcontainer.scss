@@ -1,6 +1,6 @@
+@import '../../App.scss';
 @media only screen and(min-width: 0px) {
   .budget-container {
-    // position: relative;
     min-height: 100vh;
     .step {
       display: flex;
@@ -14,20 +14,20 @@
       }
     }
     #budget-item:nth-child(2n) {
-      background: #3b59a426;
+      background: $blue-grey;
     }
 
     .controls {
-      background: #3e5ba2;
+      background: $primary-color;
       display: flex;
       justify-content: space-between;
       align-items: center;
       height: 30px;
     }
     .add-item {
-      background: #6ca23e;
-      box-shadow: 0px 0px 10px -1px rgba(0, 0, 0, 0.3);
-      color: #fff;
+      background: $secondary-color;
+      box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+      color: $white;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -40,6 +40,37 @@
       right: 5%;
       z-index: 2;
     }
+    .select-container {
+      cursor: pointer;
+      position: relative;
+      width: 70%;
+      margin: 0 auto;
+      select {
+        cursor: pointer;
+        padding: 10px 10px 10px 5px;
+        overflow: hidden;
+        border: 1px solid #cbcbcb;
+        background: transparent;
+        border-radius: 3px;
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(0, 0, 0, 0.07);
+        background-image: none;
+        width: 100%;
+      }
+      &:after {
+        content: '▾';
+        position: absolute;
+        top: 0;
+        right: 12px;
+        z-index: 1;
+        color: #bbbbbb;
+        line-height: 40px;
+        font-size: 14px;
+
+        .ie & {
+            display: none;
+        }
+    }
+    }
   }
 }
 @media only screen and (min-width: 768px) {
@@ -47,6 +78,9 @@
     .add-item {
       height: 80px;
       width: 80px;
+    }
+    .select-container {
+      max-width: 600px;
     }
   }
 }

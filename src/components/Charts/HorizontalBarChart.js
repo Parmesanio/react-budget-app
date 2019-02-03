@@ -11,7 +11,7 @@ class HorizontalBarChart extends Component {
     //     }
     // }
     state = {
-        itemSpent: this.props.itemSpent,
+        itemSpent: this.props.itemSpent == 0 ? this.props.itemAmount : this.props.itemSpent,
         itemAmount: this.props.itemAmount,
         limit: 100
     }
@@ -26,7 +26,7 @@ class HorizontalBarChart extends Component {
                     datasets: [{
                         label: this.props.itemTitle,
                         data: [Math.ceil((this.state.itemSpent / this.state.itemAmount) * 100)],
-                        backgroundColor: Math.ceil((this.state.itemSpent / this.state.itemAmount) * 100) < 40 ? 'green' : Math.ceil((this.state.itemSpent / this.state.itemAmount) * 100) < 70 ? 'yellow' : 'red'
+                        backgroundColor: this.props.itemSpent == 0 ? this.props.itemColor : Math.ceil((this.state.itemSpent / this.state.itemAmount) * 100) < 90 ? this.props.itemColor : 'red'
                     }, { label: this.props.itemTitle, data: [this.state.limit], backgroundColor: "lightgrey" }]
                 }}
                 options={{

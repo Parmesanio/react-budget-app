@@ -48,7 +48,7 @@ class BudgetContainer extends Component {
     return <WrappedComponent data={data} />;
   };
   render() {
-    let { budgetItems, user, editing } = this.props;
+    let { budgetItems, user, dates } = this.props;
     console.log("budgetcontainer", this.props);
     let login = this.withBudgetData(Login, { ...this.props });
     let signup = this.withBudgetData(Signup, { ...this.props });
@@ -64,9 +64,13 @@ class BudgetContainer extends Component {
           itemAmount={item.amount}
           itemId={item.id}
           itemSpent={item.spent}
+          itemColor={item.color}
           {...this.props}
         />
       ));
+    let mappedDates = dates && dates.map(date => {
+      return <option key={date.to_char}>{date.to_char}</option>
+    })
     return (
       <div className="budget-container">
         {user ? (
@@ -87,7 +91,10 @@ class BudgetContainer extends Component {
                     ? addBudgetItem
                     : this.props.location.pathname == "/budget/monthly-budget"
                       ? budgetForm
-                      : mappedBudgetItems}
+                      : <React.Fragment><div className="select-container"><select onChange={(e) => {
+                        let dateArr = e.target.value.split(' ');
+                        this.props.setBudgetItems(this.props.user.id, dateArr[0], dateArr[1])
+                      }}>{mappedDates}</select></div>{mappedBudgetItems}</React.Fragment>}
                 </React.Fragment>
               )
         ) : this.props.location.pathname == "/login" ? (
@@ -125,7 +132,8 @@ const mapStateToProps = state => {
     budget,
     editing,
     toggleColors,
-    online
+    online,
+    dates
   } = state.budget;
   let { user, username, password } = state.user;
   return {
@@ -141,7 +149,8 @@ const mapStateToProps = state => {
     toggleColors,
     username,
     password,
-    online
+    online,
+    dates
   };
 };
 const mapDispatchToProps = {

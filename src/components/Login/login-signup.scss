@@ -1,7 +1,8 @@
+@import '../../App.scss';
 @media only screen and (min-width: 0px) {
   .login-signup-container {
-    background: #3e5ba2;
-    color: #fff;
+    background: $primary-color;
+    color: $white;
     min-height: 100vh;
     width: 100%;
     .login-form,
@@ -14,14 +15,12 @@
         width: 100%;
       }
       a {
-        color: #fff;
+        color: $white;
         text-decoration: underline;
       }
       .active {
-        color: #6ca23e;
+        color: $secondary-color;
       }
-    }
-    form.signup-form {
     }
   }
 }

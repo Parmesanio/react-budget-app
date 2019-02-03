@@ -1,3 +1,4 @@
+@import '../../../App.scss';
 @media only screen and (min-width: 0px) {
   #budget-item {
     display: flex;
@@ -5,7 +6,7 @@
     justify-content: space-between;
     align-items: center;
     text-align: left;
-    padding: 10px;
+    padding: 15px 10px 15px 10px;
     max-width: 600px;
     margin: 0 auto;
     > * {
@@ -14,7 +15,7 @@
       border: none;
     }
     h1 {
-      width: 29%;
+      width: 50%;
     }
     p {
       width: 31%;
@@ -23,7 +24,15 @@
       font-size: 3vh;
     }
     .hBarChart {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 60%;
+    }
+    div {
+      display: flex;
       width: 50%;
+      justify-content: space-between;
     }
   }
   form {
@@ -93,15 +102,15 @@
     .submit-button {
       border-radius: 3px;
       border: none;
-      color: #fff;
+      color: $white;
       padding: 10px;
       font-weight: 400;
-      background: #6ca23e;
+      background: $secondary-color;
       margin-top: 1.5em;
       width: 100%;
     }
     .delete-item {
-      background: hsla(360, 71%, 50%, 1);
+      background: $red;
       margin: 0;
     }
   }
@@ -117,8 +126,6 @@
       label,
       input {
         font-size: 2vh;
-      }
-      button {
       }
     }
     .options,
@@ -154,10 +161,10 @@
     .submit-button {
       border-radius: 3px;
       border: none;
-      color: #fff;
+      color: $white;
       padding: 10px;
       font-weight: 400;
-      background: #6ca23e;
+      background: $secondary-color;
       margin-top: 1.5em;
       width: 50%;
     }
