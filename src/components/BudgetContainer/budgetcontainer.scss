@@ -44,17 +44,25 @@
       cursor: pointer;
       position: relative;
       width: 70%;
-      margin: 0 auto;
+      margin: 1em auto;
+      overflow: hidden;
+      border: 1px solid #cbcbcb;
+      border-radius: 3px;
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(0, 0, 0, 0.07);
       select {
+        border: none;
         cursor: pointer;
+        display: block;
         padding: 10px 10px 10px 5px;
-        overflow: hidden;
-        border: 1px solid #cbcbcb;
+        position: relative;
+        z-index: 2;
         background: transparent;
-        border-radius: 3px;
-        box-shadow: 0 0 1px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(0, 0, 0, 0.07);
         background-image: none;
+        text-overflow: '';
+    text-indent: 5px;
         width: 100%;
+        appearance: none;
+        -moz-appearance: none;
       }
       &:after {
         content: '▾';
@@ -63,8 +71,7 @@
         right: 12px;
         z-index: 1;
         color: #bbbbbb;
-        line-height: 40px;
-        font-size: 14px;
+        line-height: 33px;
 
         .ie & {
             display: none;

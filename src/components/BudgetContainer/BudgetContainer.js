@@ -86,15 +86,16 @@ class BudgetContainer extends Component {
             </div>
           ) : (
                 <React.Fragment>
+                  <div className="select-container"><select onChange={(e) => {
+                    let dateArr = e.target.value.split(' ');
+                    this.props.setBudgetItems(this.props.user.id, dateArr[0], dateArr[1])
+                  }}>{mappedDates}</select></div>
                   {budgetItems && pieChart}
                   {this.props.location.pathname == "/budget/create"
                     ? addBudgetItem
                     : this.props.location.pathname == "/budget/monthly-budget"
                       ? budgetForm
-                      : <React.Fragment><div className="select-container"><select onChange={(e) => {
-                        let dateArr = e.target.value.split(' ');
-                        this.props.setBudgetItems(this.props.user.id, dateArr[0], dateArr[1])
-                      }}>{mappedDates}</select></div>{mappedBudgetItems}</React.Fragment>}
+                      : <React.Fragment>{mappedBudgetItems}</React.Fragment>}
                 </React.Fragment>
               )
         ) : this.props.location.pathname == "/login" ? (

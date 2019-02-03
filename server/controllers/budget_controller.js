@@ -5,13 +5,29 @@ module.exports = {
     } else {
       const db = req.app.get("db");
       let { id } = req.params;
-      console.log("get budget items fired", id);
+      let month = req.query.month;
+      let year = req.query.year;
+      console.log("get budget items fired", req.query, id, month, year);
+      if (month !== 'null' && year !== 'null') {
+        db.get_budget_items_by_date({ userId: +id, month, year })
+          .then(items => {
+            db.get_dates({ userId: +id })
+              .then(dates => {
 
-      db.get_budget_items(+id)
-        .then(items => {
-          res.send(items);
-        })
-        .catch(err => console.log(err));
+                res.send({ items, dates });
+              })
+          })
+      } else {
+        db.get_budget_items({ userId: +id })
+          .then(items => {
+            db.get_dates({ userId: +id })
+              .then(dates => {
+
+                res.send({ items, dates });
+              })
+          })
+          .catch(err => console.log(err));
+      }
     }
   },
   post: (req, res) => {
@@ -29,7 +45,7 @@ module.exports = {
       res.send(req.session.user.guestBudgetItems);
     } else {
       const db = req.app.get("db");
-      db.create_budget_item({ title, amount, color, spent, userId: +userId })
+      db.create_budget_item({ title, amount, color, spent: spent || 0, userId: +userId })
         .then(items => {
           res.send(items);
         })
@@ -90,8 +106,10 @@ module.exports = {
       res.send(req.session.user.guestBudgetItems);
     } else {
       console.log(id, userId, title, amount, color, spent);
-      db.edit_budget_item({ id: +id, user_id: +userId, title, amount, spent, color })
+      db.edit_budget_item({ id: +id, user_id: +userId, title, amount, spent: spent || 0, color })
         .then(items => {
+          console.log('Editted items', items);
+
           res.send(items);
         })
         .catch(err => console.log("Err in editItem", err));

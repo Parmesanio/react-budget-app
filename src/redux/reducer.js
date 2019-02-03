@@ -4,7 +4,7 @@ const initialState = {
   budget: 0,
   title: null,
   amount: null,
-  spent: null,
+  spent: 0,
   colors: [
     // First Row
     "hsla(360, 71%, 70%, 1)",
@@ -52,7 +52,8 @@ const initialState = {
   selectedColor: null,
   editing: 0,
   toggleColors: false,
-  online: true
+  online: true,
+  dates: null
 };
 
 //Action Types
@@ -71,7 +72,8 @@ export default function reducer(state = initialState, action) {
     case `${SET_BUDGET_ITEMS}_FULFILLED`:
       return {
         ...state,
-        budgetItems: action.payload
+        budgetItems: action.payload.items,
+        dates: action.payload.dates
       };
     case `${SET_BUDGET_OBJECT}`:
       return {
@@ -100,6 +102,7 @@ export default function reducer(state = initialState, action) {
         editing: action.payload,
         title: budgetItem.title,
         amount: budgetItem.amount,
+        spent: budgetItem.spent,
         selectedColor: budgetItem.color
       };
     case CANCEL_EDIT_MODE:
@@ -132,14 +135,16 @@ export default function reducer(state = initialState, action) {
 }
 
 //Action Creators
-export function setBudgetItems(id) {
-  console.log("setBudgetItems fired", id);
+export function setBudgetItems(id, month = null, year = null) {
+  console.log("setBudgetItems fired", id, month, year);
 
   return {
     type: SET_BUDGET_ITEMS,
     payload: axios
-      .get(`/api/budget-items/${id}`)
+      .get(`/api/budget-items/${id}?month=${month}&year=${year}`)
       .then(res => {
+        console.log(res.data);
+
         return res.data;
       })
       .catch(err => console.log(err))

@@ -47,4 +47,38 @@ create table budget_items (
     created_at date not null default current_date
 )
 CREATE SEQUENCE budget_items_id_seq OWNED BY budget_items.id;
-select * from budget_items
+-- Select From Budget_Items Function
+drop function if exists budget_items_function(id int, month int, year int);
+create or replace function budget_items_function(month int, year int)
+returns setof budget_items language plpgsql as $$
+begin
+    if month is not null then
+        return query
+        select * from budget_items 
+        where extract(month from created_at) = month 
+        and extract(year from created_at) = year and user_id =1156015917;
+    else
+        return query
+        select * from budget_items where user_id =1156015917 ;
+    end if;
+end;
+$$;
+
+select * from budget_items_function(1, 2019);
+-- Alters
+alter table budget_items alter amount type decimal
+alter table budget_items add column active boolean default true
+
+-- Duplicate rows & Reset spent
+insert into budget_items
+(title, amount, color, user_id, spent, active)
+select title, amount, color, user_id, 0, active from budget_items where user_id = 1929076480 and extract(month from current_date) != extract(month from created_at) and active = true;
+update budget_items set active = false where user_id = 1929076480 and extract(month from current_date) != extract(month from created_at) and active = true;
+
+-- Select Distinct Date Range
+
+select distinct TO_CHAR(budget_items.created_at :: DATE, 'Mon yyyy')
+FROM budget_items
+WHERE (SELECT min(TO_CHAR(budget_items.created_at :: DATE, 'Mon yyyy')) from budget_items) < (SELECT max(TO_CHAR(budget_items.created_at :: DATE, 'Mon yyyy')) from budget_items) and user_id=1156015917;
+
+
