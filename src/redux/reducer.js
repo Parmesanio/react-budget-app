@@ -92,7 +92,14 @@ export default function reducer(state = initialState, action) {
         toggleColors: false
       };
     case `${DELETE_BUDGET_ITEM}_FULFILLED`:
-      return { ...state, budgetItems: action.payload };
+      return {
+        ...state, budgetItems: action.payload, editing: null,
+        title: null,
+        amount: null,
+        spent: null,
+        selectedColor: null,
+        toggleColors: false
+      };
     case EDIT_MODE:
       let budgetItem = state.budgetItems.find(
         item => item.id == action.payload
@@ -120,7 +127,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         budgetItems: action.payload,
-        editing: 0,
+        editing: null,
         title: null,
         amount: null,
         spent: null,
@@ -136,15 +143,11 @@ export default function reducer(state = initialState, action) {
 
 //Action Creators
 export function setBudgetItems(id, month = null, year = null) {
-  console.log("setBudgetItems fired", id, month, year);
-
   return {
     type: SET_BUDGET_ITEMS,
     payload: axios
       .get(`/api/budget-items/${id}?month=${month}&year=${year}`)
       .then(res => {
-        console.log(res.data);
-
         return res.data;
       })
       .catch(err => console.log(err))
@@ -157,7 +160,6 @@ export function handleChange(e) {
   };
 }
 export function handleCreate(title, amount, spent, color, history, id) {
-  console.log(title, +amount, +spent, color, history);
   return {
     type: CREATE_BUDGET_ITEM,
     payload: axios

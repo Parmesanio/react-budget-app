@@ -16,11 +16,13 @@ const Landing = props => {
           </NavLink>
         </div>
         <br />
+        <p>Or</p>
+        <br />
         <button
           className="guest-button"
           onClick={() => props.handleGuest(props.history, window.setTimeout)}
         >
-          Sign in as Guest
+          Sign in as a Guest
         </button>
       </div>
     </section>

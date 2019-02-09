@@ -2,7 +2,6 @@ import React from "react";
 import "./budgetform.scss";
 
 const BudgetForm = props => {
-  console.log(props);
   return (
     <form onSubmit={e => e.preventDefault()}>
       <div className="inputs">

@@ -2,14 +2,6 @@ import React, { Component } from 'react';
 import { HorizontalBar } from "react-chartjs-2";
 
 class HorizontalBarChart extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         itemAmount: this.props.itemAmount,
-    //         budget: this.props.user.budget,
-    //         limit: 100
-    //     }
-    // }
     state = {
         itemSpent: this.props.itemSpent == 0 ? this.props.itemAmount : this.props.itemSpent,
         itemAmount: this.props.itemAmount,
@@ -17,8 +9,6 @@ class HorizontalBarChart extends Component {
     }
     // BUG: this.state.itemAmount not updating
     render() {
-        console.log(this.props.itemSpent, this.state.itemAmount, this.state.limit, this.props);
-
         return (
             <HorizontalBar
                 height={10}

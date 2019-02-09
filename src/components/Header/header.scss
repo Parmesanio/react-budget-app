@@ -40,7 +40,6 @@
         .controls {
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
           align-items: center;
           width: 100%;
           a {
@@ -95,13 +94,19 @@
     div {
       width: 600px;
       margin: 0 auto;
+      h1 {
+        font-size: 1.5em;
+      }
       nav {
         height: inherit;
         position: static;
-        width: 35%;
+        width: 45%;
         .controls {
           flex-direction: row;
-          font-size: 1.5vh;
+          font-size: 15px;
+          a {
+            margin: 0 1em;
+          }
         }
       }
       .menu {
@@ -112,7 +117,6 @@
 }
 @media only screen and (min-width: 1024px) {
   header {
-    font-size: 3vh;
     div {
       nav {
         .controls {

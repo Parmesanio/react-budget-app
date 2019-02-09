@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink, withRouter } from "react-router-dom";
+import { Link, NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { cancelEditMode } from "../../redux/reducer";
 import { setUser, logout, handleMessage } from "../../redux/userReducer";
@@ -23,7 +23,7 @@ class Header extends Component {
     return (
       <header>
         <div>
-          <h1>Budget Tracker</h1>
+          <h1><Link to="/">Budget Tracker</Link></h1>
           <img src="" alt="" />
           <div
             className={`${isToggled ? "show-overlay" : "hide-overlay"}`}

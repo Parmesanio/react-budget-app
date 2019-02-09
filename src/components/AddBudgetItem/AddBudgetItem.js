@@ -21,16 +21,6 @@ const AddBudgetItem = props => {
     online,
     cancelEditMode
   } = props.data;
-  window.addEventListener("offline", function (e) {
-    e.preventDefault();
-    onlineMode();
-    // console.log(online);
-  });
-  window.addEventListener("online", function (e) {
-    e.preventDefault();
-    onlineMode();
-    // console.log(online);
-  });
   let mappedColors =
     colors &&
     colors.map((color, i) => (
@@ -42,7 +32,6 @@ const AddBudgetItem = props => {
         style={{ background: color }}
       />
     ));
-  console.log(online);
   return (
     <form onSubmit={e => e.preventDefault()}>
       <div className="inputs">

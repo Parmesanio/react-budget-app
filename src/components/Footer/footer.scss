@@ -1,6 +1,24 @@
 @import '../../App.scss';
 @media only screen and (min-width: 0px) {
   footer {
+    background: $primary-color;
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     min-height: 20vh;
+    div {
+      width: 50%;
+      margin: 0 auto;
+      hr {
+        width: 100%;
+      }
+      a {
+        color: $white;
+        cursor: pointer;
+        margin: 0 0.5em;
+      }
+    }
   }
 }

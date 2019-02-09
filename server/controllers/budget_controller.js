@@ -7,7 +7,6 @@ module.exports = {
       let { id } = req.params;
       let month = req.query.month;
       let year = req.query.year;
-      console.log("get budget items fired", req.query, id, month, year);
       if (month !== 'null' && year !== 'null') {
         db.get_budget_items_by_date({ userId: +id, month, year })
           .then(items => {
@@ -105,11 +104,8 @@ module.exports = {
       };
       res.send(req.session.user.guestBudgetItems);
     } else {
-      console.log(id, userId, title, amount, color, spent);
       db.edit_budget_item({ id: +id, user_id: +userId, title, amount, spent: spent || 0, color })
         .then(items => {
-          console.log('Editted items', items);
-
           res.send(items);
         })
         .catch(err => console.log("Err in editItem", err));

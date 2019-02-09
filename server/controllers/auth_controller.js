@@ -7,7 +7,6 @@ module.exports = {
     bcrypt.hash(password, saltRounds).then(hashedPassword => {
       db.create_user({ username, email, hashedPassword, budget: 0 })
         .then(newUser => {
-          console.log("newUser", newUser);
           req.session.user = {
             id: newUser[0].id,
             username: newUser[0].username,
@@ -25,7 +24,6 @@ module.exports = {
   bcryptLogin: (req, res) => {
     const db = req.app.get("db");
     const { username, password } = req.body;
-    console.log("login", req.body);
     db.get_user_by_username([username]).then(users => {
       if (users.length) {
         bcrypt.compare(password, users[0].password).then(passwordsMatched => {

@@ -26,7 +26,6 @@ function ensureLoggedIn(req, res, next) {
     res.status(403).json({ message: "You are not authorized" });
   }
 }
-// app.use(express.static(`__dirname/../build`));
 app.use(express.static(`${__dirname}/../build`));
 massive(process.env.HOST == "localhost" ? process.env.TEST_CONNECTION_STRING : process.env.CONNECTION_STRING)
   .then(db => {

@@ -49,7 +49,6 @@ class BudgetContainer extends Component {
   };
   render() {
     let { budgetItems, user, dates } = this.props;
-    console.log("budgetcontainer", this.props);
     let login = this.withBudgetData(Login, { ...this.props });
     let signup = this.withBudgetData(Signup, { ...this.props });
     let addBudgetItem = this.withBudgetData(AddBudgetItem, { ...this.props });
